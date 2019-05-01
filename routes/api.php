@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/skills', function() {
+Route::get('/skills', function () {
     return ['laravel', 'Vue', 'PHP', 'JavaScript', 'Tooling'];
 });
 
@@ -28,8 +28,12 @@ Route::get('/skills', function() {
 //     return factory('App\User', 10)->make();
 // });
 
-Route::namespace('Api')->group(function () {
-    Route::get('/users', 'UsersController@index');
-    Route::get('/users/{user}', 'UsersController@show');
-    Route::put('/users/{user}', 'UsersController@update');
-});
+Route::namespace('Api')->group(
+    function () {
+        Route::get('/users', 'UsersController@index');
+        Route::get('/users/{user}', 'UsersController@show');
+        Route::put('/users/{user}', 'UsersController@update');
+        Route::delete('/users/{user}', 'UsersController@destroy');
+        Route::apiResource('recettes', 'RecettesController');
+    }
+);

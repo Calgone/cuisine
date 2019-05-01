@@ -1,3 +1,3 @@
 <template>
-  <p>This is the homepage</p>
+  <p>Bienvenue sur mon site de recettes</p>
 </template>

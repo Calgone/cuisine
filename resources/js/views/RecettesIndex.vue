@@ -11,12 +11,12 @@
     </div>
 
     <ul v-if="users">
-      <li v-for="{ id, nom, prenom, email } in users" :key="id">
-        <strong>Name:</strong>
-        {{ nom + ' ' + prenom }},
-        <strong>Email:</strong>
-        {{ email }}
-        <router-link :to="{ name: 'users.edit', params: { id } }">Edit</router-link>
+      <li v-for="{ id, nom, description } in recettes" :key="id">
+        <strong>Nom:</strong>
+        {{ nom }},
+        <strong>Description:</strong>
+        {{ description }}
+        <router-link :to="{ name: 'recettes.edit', params: { id } }">Edit</router-link>
       </li>
     </ul>
     <div class="pagination">
@@ -32,12 +32,17 @@
 </template>
 <script>
 // import axios from "axios";
-import api from "../api/users";
+import API from "../api/api";
+
+const myApi = new API({ url:'127.0.0.1:8080/api' });
+
 
 const getUsers = (page, callback) => {
   const params = { page };
-  api
-    .all({ params })
+  myApi.createEntity({ name: 'recettes' });
+
+  myApi.endpoints.recettes
+    .getAll({ params })
     .then(response => {
       callback(null, response.data);
     })
@@ -110,23 +115,7 @@ export default {
   //     this.fetchData();
   //   },
   methods: {
-    // fetchData() {
-    //   this.error = this.users = null;
-    //   this.loading = true;
-    //   axios
-    //     .get("/api/users")
-    //     .then(response => {
-    //       console.log(response);
-    //       this.loading = false;
-    //       this.users = response.data.data;
-    //     })
-    //     .catch(error => {
-    //       this.loading = false;
-    //       this.error = error.response.data.message || error.message;
-    //     });
-    // }
     goToNext() {
-      //console.log(this.nextPage);
       this.$router.push({
         query: {
           page: this.nextPage

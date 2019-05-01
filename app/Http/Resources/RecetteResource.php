@@ -2,24 +2,26 @@
 
 namespace App\Http\Resources;
 
+// use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class RecetteResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
+     * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
+     * 
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         // return parent::toArray($request);
         return [
             'id' => $this->id,
             'nom' => $this->nom,
-            'prenom' => $this->prenom,
-            'email' => $this->email,
+            'description' => $this->description,
+            'owner' => $this->owner,
         ];
     }
 }

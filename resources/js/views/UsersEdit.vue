@@ -3,16 +3,26 @@
     <div v-if="message" class="alert">{{ message }}</div>
     <div v-if="! loaded">Loading...</div>
     <form @submit.prevent="onSubmit($event)" v-else>
-      <div class="form-group">
+      <div class="field">
         <label for="user_name">Name</label>
-        <input id="user_name" v-model="user.name">
+        <div class="control">
+          <input class="input" id="user_name" v-model="user.name">
+        </div>
       </div>
-      <div class="form-group">
+      <div class="field">
         <label for="user_email">Email</label>
-        <input id="user_email" type="email" v-model="user.email">
+        <div class="control">
+          <input class="input" id="user_email" type="email" v-model="user.email">
+        </div>
       </div>
-      <div class="form-group">
-        <button type="submit" :disabled="saving">Update</button>
+      <div class="field is-grouped">
+        <button class="button is-link" type="submit" :disabled="saving">Valider</button>
+        <button
+          class="button is-danger" type="button"
+          :disabled="saving"
+          @click.prevent="onDelete($event)"
+        >Supprimer</button>
+        <button class="button is-text" type="button" @click="retour">Retour</button>
       </div>
     </form>
   </div>
@@ -51,15 +61,35 @@ export default {
         .catch(error => {
           console.log(error);
         })
-        .then(_ => (this.saving = false));
+        .then(_ => {
+          this.saving = false;
+          this.$router.go(-1);
+        });
+    },
+    onDelete() {
+      this.saving = true;
+
+      api.delete(this.user.id).then(response => {
+        console.log(response);
+        this.message = "Utilisateur supprimé.";
+        setTimeout(() => this.$router.push({ name: "users.index" }), 2000);
+      });
+    },
+    retour() {
+      this.$router.go(-1);
     }
   },
   created() {
     // Load user details
-    api.find(this.$route.params.id).then(response => {
-      this.loaded = true;
-      this.user = response.data.data;
-    });
+    api
+      .find(this.$route.params.id)
+      .then(response => {
+        this.loaded = true;
+        this.user = response.data.data;
+      })
+      .catch(err => {
+        this.$router.push({ name: "404" });
+      });
   }
 };
 </script>

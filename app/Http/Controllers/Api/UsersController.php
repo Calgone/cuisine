@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 
+/**
+ * Undocumented class
+ */
 class UsersController extends Controller
 {
     public function index()
@@ -19,15 +22,32 @@ class UsersController extends Controller
         return new UserResource($user);
     }
 
-    public function update(User $user, Request $request) 
+    /**
+     * Mise à jour d'un user
+     *
+     * @param User    $user    Le user
+     * @param Request $request La requete
+     * 
+     * @return void
+     */
+    public function update(User $user, Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-        ]);
-    
+        $data = $request->validate(
+            [
+                'name' => 'required',
+                'email' => 'required|email',
+            ]
+        );
+
         $user->update($data);
-    
+
         return new UserResource($user);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return response(null, 204);
     }
 }

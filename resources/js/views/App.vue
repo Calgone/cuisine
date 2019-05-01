@@ -1,18 +1,65 @@
 <template>
-    <div>
-        <h1>La cuisine de Grégory</h1>
+  <div>
+    <nav class="navbar is-fixed-top is-light" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <router-link class="navbar-item" :to="{ name: 'home' }">
+          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        </router-link>
 
-        <p>
-            <router-link :to="{ name: 'home' }">Home</router-link> |
-            <router-link :to="{ name: 'hello' }">Hello World</router-link>
-            <router-link :to="{ name: 'users.index' }">Users</router-link>
-        </p>
+        <a
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
 
-        <div class="container">
-            <router-view></router-view>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <router-link class="navbar-item" :to="{ name: 'home' }">Accueil</router-link>
+          <!-- <a class="navbar-item">Accueil</a> -->
+          <router-link class="navbar-item" :to="{ name: 'recettes.index' }">Recettes</router-link>
+
+          <router-link class="navbar-item" :to="{ name: 'hello' }">Hello World</router-link>
+
+          <router-link class="navbar-item" :to="{ name: 'users.index' }">Users</router-link>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">More</a>
+
+            <div class="navbar-dropdown">
+              <router-link class="navbar-item" :to="{ name: 'about' }">About</router-link>
+              <a class="navbar-item">Jobs</a>
+              <a class="navbar-item">Contact</a>
+              <hr class="navbar-divider">
+              <a class="navbar-item">Report an issue</a>
+            </div>
+          </div>
         </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light">Log in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <h1>La cuisine de Grégory</h1>
+    <div class="container">
+      <router-view></router-view>
     </div>
+  </div>
 </template>
 <script>
-    export default {}
+export default {};
 </script>
