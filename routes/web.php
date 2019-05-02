@@ -45,6 +45,6 @@ Route::patch('/etapes/{etape}', 'RecetteEtapesController@update');
 Route::get('phpinfo', function(){
 	phpinfo();
 });
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

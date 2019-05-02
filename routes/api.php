@@ -13,13 +13,29 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get(
+    '/user',
+    function (Request $request) {
+        return $request->user();
+    }
+);
+// public routes
+Route::post('/login', 'Api\AuthController@login')->name('login.api');
+Route::post('/register', 'Api\AuthController@register')->name('register.api');
 
-Route::get('/skills', function () {
-    return ['laravel', 'Vue', 'PHP', 'JavaScript', 'Tooling'];
-});
+// private routes
+Route::middleware('auth:api')->group(
+    function () {
+        Route::get('/logout', 'Api\AuthController@logout')->name('logout');
+    }
+);
+
+Route::get(
+    '/skills',
+    function () {
+        return ['laravel', 'Vue', 'PHP', 'JavaScript', 'Tooling'];
+    }
+);
 
 // Route::get('/users', function () {
 //     if (rand(1, 10) < 5) {

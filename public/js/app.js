@@ -18954,7 +18954,7 @@ function () {
         var _ref3$query = _ref3.query,
             query = _ref3$query === void 0 ? {} : _ref3$query;
         var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        // console.log(resourceURL, query, config);
+        console.log(resourceURL, query, config);
         return axios.get(resourceURL, Object.assign({
           params: {
             query: query
