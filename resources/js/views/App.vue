@@ -44,11 +44,16 @@
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="buttons">
+            <div v-if="authenticated && user">
+              <p>Hello, {{ user.name }}</p>
+
+              <router-link to="/logout">Logout</router-link>
+            </div>
+            <div class="buttons" v-else>
               <a class="button is-primary">
-                <strong>Sign up</strong>
+                <strong>Inscription</strong>
               </a>
-              <a class="button is-light">Log in</a>
+              <router-link :to="{ name: 'login' }" class="button is-light">Connexion</router-link>
             </div>
           </div>
         </div>
@@ -61,5 +66,25 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      authenticated: auth.check(),
+      user: auth.user
+    };
+  },
+
+  mounted() {
+    Event.$on("userLoggedIn", () => {
+      this.authenticated = true;
+      this.user = auth.user;
+    });
+  },
+  methods: {
+    logout() {
+      auth.logout();
+      this.$router.push('/login');
+    }
+  }
+};
 </script>

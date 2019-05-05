@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Undocumented class
@@ -59,21 +60,82 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user) {
-
-            if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['token' => $token];
-                return response($response, 200);
-            } else {
-                $response = "Password missmatch";
-                return response($response, 422);
-            }
-        } else {
-            $response = 'User does not exist';
-            return response($response, 422);
+        if (!$user) {
+            return response()->json(
+                [
+                    'message' => 'Wrong email or password',
+                    'status' => 422
+                ],
+                422
+            );
         }
+
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(
+                [
+                    'message' => 'Wrong email or password',
+                    'status' => 422
+                ],
+                422
+            );
+        }
+
+        // $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        // $response = ['token' => $token];
+        // return response($response, 200);
+        
+        // Send an internal API request to get an access token
+        $client = DB::table('oauth_clients')
+            ->where('password_client', true)
+            ->first();
+
+        // Make sure a Password Client exists in the DB
+        if (!$client) {
+            return response()->json(
+                [
+                    'message' => 'Laravel Passport is not setup properly.',
+                    'status' => 500
+                ],
+                500
+            );
+        }
+
+        $data = [
+            'grant_type' => 'password',
+            'client_id' => $client->id,
+            'client_secret' => $client->secret,
+            'username' => request('email'),
+            'password' => request('password'),
+        ];
+
+        $request = Request::create('/oauth/token', 'POST', $data);
+
+        $response = app()->handle($request);
+
+        // Check if the request was successful
+        if ($response->getStatusCode() != 200) {
+            return response()->json(
+                [
+                    'message' => 'Wrong email or password',
+                    'status' => 422
+                ],
+                422
+            );
+        }
+
+        // Get the data from the response
+        $data = json_decode($response->getContent());
+
+        // Format the final response in a desirable format
+        return response()->json(
+            [
+                'token' => $data->access_token,
+                'user' => $user,
+                'status' => 200
+            ]
+        );
     }
+
     /**
      * Logout a user
      *

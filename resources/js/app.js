@@ -36,8 +36,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
+window.Event = new Vue; // gère l'authentification avec la classe Auth
 
 import App from './views/App';
+import Login from './views/Login';
 import Hello from './views/Hello';
 import Home from './views/Home';
 import UsersIndex from './views/UsersIndex';
@@ -45,6 +47,9 @@ import UsersEdit from './views/UsersEdit';
 import NotFound from './views/NotFound';
 import About from './views/About';
 import RecettesIndex from './views/RecettesIndex';
+import Auth from './core/Auth';
+
+window.auth = Auth;
 
 const router = new VueRouter({
     mode: 'history',
@@ -53,6 +58,11 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
         },
         {
             path: '/hello',
