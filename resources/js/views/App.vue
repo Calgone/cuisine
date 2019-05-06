@@ -45,9 +45,9 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div v-if="authenticated && user">
-              <p>Hello, {{ user.name }}</p>
+              <p>Hello, {{ user.prenom }}</p>
 
-              <router-link to="/logout">Logout</router-link>
+              <button @click="logout" class="button is-danger is-inverted">déconnexion</button>
             </div>
             <div class="buttons" v-else>
               <a class="button is-primary">
@@ -82,8 +82,10 @@ export default {
   },
   methods: {
     logout() {
+      this.authenticated = false;
+      this.user = null;
       auth.logout();
-      this.$router.push('/login');
+      this.$router.push("/login");
     }
   }
 };

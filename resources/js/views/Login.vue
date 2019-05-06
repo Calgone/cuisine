@@ -33,7 +33,12 @@
               </div>
               <div class="field">
                 <label class="checkbox">
-                  <input type="checkbox">
+                  <input
+                    type="checkbox"
+                    name="remember"
+                    v-model="remember"
+                    @click="toggleRemember"
+                  >
                   Rester connecté
                 </label>
               </div>
@@ -63,29 +68,32 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      remember: false,
     };
   },
 
   methods: {
+    toggleRemember() {
+      this.remember = !this.remember;
+    },
     login() {
       let data = {
         email: this.email,
-        password: this.password
+        password: this.password,
       };
 
       axios
         .post("/api/login", data)
         .then(({ data }) => {
           // Store data
-        //   console.log(auth);
-          console.log('retour axios');
-          auth.login(data.token, data.user);
-          this.$router.push("/recettes");
-          console.log('push');
+          //   console.log(auth);
+          auth.login(data.token, data.user, this.remember);
+          this.$router.push("/dashboard");
+          console.log("push");
         })
         .catch(({ response }) => {
-            console.log(response);
+          console.log(response);
           alert(response.data.message);
         });
     }

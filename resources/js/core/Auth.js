@@ -3,17 +3,21 @@ import axios from "axios";
 class Auth {
 
     constructor() {
-        this.token = null;
-        this.user = null;
+        this.token = window.localStorage.getItem('token');
+        let userData = window.localStorage.getItem('user');
+        this.user = userData ? JSON.parse(userData) : null;
+
+        if (this.token) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
+        }
     }
 
-    login(token, user) {
-        console.log('auth.login()');
+    login(token, user, remember) {
+        console.log(remember);
         window.localStorage.setItem('token', token);
         window.localStorage.setItem('user', JSON.stringify(user));
-        console.log('auth.login() 2');
+        window.localStorage.setItem('remember', remember);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        console.log('auth.login() 3');
         this.token = token;
         this.user = user;
         
@@ -28,8 +32,13 @@ class Auth {
     logout() {
         this.token = null;
         this.user = null;
+        
+        window.localStorage.removeItem('remember');
+        window.localStorage.removeItem('token');
+        window.localStorage.removeItem('user');
+    
         // Rediriger vers la homepage... Voir App.vue
     }
 }
 
-export default new Auth();
+export default Auth;

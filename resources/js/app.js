@@ -48,8 +48,9 @@ import NotFound from './views/NotFound';
 import About from './views/About';
 import RecettesIndex from './views/RecettesIndex';
 import Auth from './core/Auth';
+import Dashboard from './views/Dashboard';
 
-window.auth = Auth;
+window.auth = new Auth();
 
 const router = new VueRouter({
     mode: 'history',
@@ -84,6 +85,11 @@ const router = new VueRouter({
             name: 'recettes.index',
             component: RecettesIndex,
         },
+        {
+            path: '/dashboard',
+            component: Dashboard,
+            meta: { middlewareAuth: true }
+        },
         // {
         //     path: '/recettes/:id/edit',
         //     name: 'recette.edit',
@@ -98,6 +104,22 @@ const router = new VueRouter({
         { path: '*', redirect: '/404' },
     ],
 });
+
+//redirect to login for all private pages
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.middlewareAuth)) {
+        if (!auth.check()) {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            });
+
+            return;
+        }
+    }
+
+    next();
+})
 
 const app = new Vue({
     el: '#app',
