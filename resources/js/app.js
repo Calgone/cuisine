@@ -33,93 +33,32 @@
 //// });
 
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
+import App from './views/App';
+import router from './core/Routes';
+import Api from './core/Api';
+import Auth from './core/Auth';
 
+window.Vue = require('vue');
 Vue.use(VueRouter)
 window.Event = new Vue; // gère l'authentification avec la classe Auth
-
-import App from './views/App';
-import Login from './views/Login';
-import Hello from './views/Hello';
-import Home from './views/Home';
-import UsersIndex from './views/UsersIndex';
-import UsersEdit from './views/UsersEdit';
-import NotFound from './views/NotFound';
-import About from './views/About';
-import RecettesIndex from './views/RecettesIndex';
-import Auth from './core/Auth';
-import Dashboard from './views/Dashboard';
-
+window.api = new Api();
 window.auth = new Auth();
 
-const router = new VueRouter({
-    mode: 'history',
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login
-        },
-        {
-            path: '/hello',
-            name: 'hello',
-            component: Hello,
-        },
-        {
-            path: '/users',
-            name: 'users.index',
-            component: UsersIndex,
-        },
-        {
-            path: '/users/:id/edit',
-            name: 'users.edit',
-            component: UsersEdit,
-        },
-        {
-            path: '/recettes',
-            name: 'recettes.index',
-            component: RecettesIndex,
-        },
-        {
-            path: '/dashboard',
-            component: Dashboard,
-            meta: { middlewareAuth: true }
-        },
-        // {
-        //     path: '/recettes/:id/edit',
-        //     name: 'recette.edit',
-        //     component: RecetteEdit,
-        // },
-        {
-            path: '/about',
-            name: 'about',
-            component: About
-        },
-        { path: '/404', name: '404', component: NotFound },
-        { path: '*', redirect: '/404' },
-    ],
-});
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
 
-//redirect to login for all private pages
-router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.middlewareAuth)) {
-        if (!auth.check()) {
-            next({
-                path: '/login',
-                query: { redirect: to.fullPath }
-            });
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
 
-            return;
-        }
-    }
-
-    next();
-})
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
 
 const app = new Vue({
     el: '#app',

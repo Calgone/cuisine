@@ -13,20 +13,26 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get(
-    '/user',
-    function (Request $request) {
-        return $request->user();
-    }
-);
+// Route::middleware('auth:api')->get(
+//     '/user',
+//     function (Request $request) {
+//         return $request->user();
+//     }
+// );
 // public routes
 Route::post('/login', 'Api\AuthController@login')->name('login.api');
 Route::post('/register', 'Api\AuthController@register')->name('register.api');
 
 // private routes
-Route::middleware('auth:api')->group(
+Route::group(
+    ['namespace' => 'Api', 'middleware' => 'auth:api'],
     function () {
-        Route::get('/logout', 'Api\AuthController@logout')->name('logout');
+        Route::get('logout', 'AuthController@logout')->name('logout');
+        Route::get('get-user', 'AuthController@getUser');
+        Route::get('users', 'UsersController@index');
+        Route::get('users/{user}', 'UsersController@show');
+        Route::put('users/{user}', 'UsersController@update');
+        Route::delete('users/{user}', 'UsersController@destroy');
     }
 );
 
@@ -46,10 +52,7 @@ Route::get(
 
 Route::namespace('Api')->group(
     function () {
-        Route::get('/users', 'UsersController@index');
-        Route::get('/users/{user}', 'UsersController@show');
-        Route::put('/users/{user}', 'UsersController@update');
-        Route::delete('/users/{user}', 'UsersController@destroy');
+        
         Route::apiResource('recettes', 'RecettesController');
     }
 );

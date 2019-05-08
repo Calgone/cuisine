@@ -1,32 +1,39 @@
 <template>
-  <div class="users">
-    <div class="loading" v-if="loading">Loading...</div>
-
-    <div v-if="error" class="error">
-      <p>{{ error }}</p>
-
-      <p>
-        <button @click.prevent="fetchData">Try Again</button>
-      </p>
+  <div class="container">
+    <div class="content">
+      <router-link
+        class="button is-outlined is-link"
+        :to="{ name: 'recettes.create' }"
+      >Créer une recette</router-link>
     </div>
+    <div class="content box">
+      <div class="loading" v-if="loading">Loading...</div>
 
-    <ul v-if="users">
-      <li v-for="{ id, nom, description } in recettes" :key="id">
-        <strong>Nom:</strong>
-        {{ nom }},
-        <strong>Description:</strong>
-        {{ description }}
-        <router-link :to="{ name: 'recettes.edit', params: { id } }">Edit</router-link>
-      </li>
-    </ul>
-    <div class="pagination">
-      <button class="button is-rounded" :disabled="! prevPage" @click.prevent="goToPrev">Previous</button>
-      {{ paginationCount }}
-      <button
-        class="button is-rounded"
-        :disabled="! nextPage"
-        @click.prevent="goToNext"
-      >Next</button>
+      <div v-if="error" class="error">
+        <p>{{ error }}</p>
+        <p>
+          <button type="button" class="button is-warning" @click.prevent="fetchData">Try Again</button>
+        </p>
+      </div>
+
+      <ul v-if="recettes">
+        <li v-for="{ id, nom, description } in recettes" :key="id">
+          <strong>Nom:</strong>
+          {{ nom }},
+          <strong>Description:</strong>
+          {{ description }}
+          <router-link :to="{ name: 'recettes.edit', params: { id } }">Edit</router-link>
+        </li>
+      </ul>
+      <div class="pagination">
+        <button class="button is-rounded" :disabled="! prevPage" @click.prevent="goToPrev">Previous</button>
+        {{ paginationCount }}
+        <button
+          class="button is-rounded"
+          :disabled="! nextPage"
+          @click.prevent="goToNext"
+        >Next</button>
+      </div>
     </div>
   </div>
 </template>
@@ -34,12 +41,12 @@
 // import axios from "axios";
 import API from "../api/api";
 
-const myApi = new API({ url:'127.0.0.1:8080/api' });
+const myApi = new API({ url: "/api" });
+myApi.createEntity({ name: "recettes" });
+// console.log(myApi.endpoints);
 
-
-const getUsers = (page, callback) => {
+const getRecettes = (page, callback) => {
   const params = { page };
-  myApi.createEntity({ name: 'recettes' });
 
   myApi.endpoints.recettes
     .getAll({ params })
@@ -55,7 +62,7 @@ export default {
   data() {
     return {
       loading: false,
-      users: null,
+      recettes: null,
       meta: null,
       links: {
         first: null,
@@ -92,7 +99,7 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    getUsers(to.query.page, (err, data) => {
+    getRecettes(to.query.page, (err, data) => {
       // on a pas accès à this car le composant n'est pas rendu
       // donc on envoie un callback à next pour lancer setData après affichage
       next(vm => vm.setData(err, data));
@@ -103,9 +110,9 @@ export default {
   // Ici on a accès à "this" sur le composant car il est affiché
   beforeRouteUpdate(to, from, next) {
     this.loading = true;
-    this.users = this.links = this.meta = null;
+    this.recettes = this.links = this.meta = null;
     // console.log(to, from, next);
-    getUsers(to.query.page, (err, data) => {
+    getRecettes(to.query.page, (err, data) => {
       this.setData(err, data);
       this.loading = false;
       next(); // pas besoin du callback cette fois, on a utilisé this.setData() juste au dessus
@@ -124,17 +131,17 @@ export default {
     },
     goToPrev() {
       this.$router.push({
-        name: "users.index",
+        name: "recettes.index",
         query: {
           page: this.prevPage
         }
       });
     },
-    setData(err, { data: users, links, meta }) {
+    setData(err, { data: recettes, links, meta }) {
       if (err) {
         this.error = err.toString();
       } else {
-        this.users = users;
+        this.recettes = recettes;
         this.links = links;
         this.meta = meta;
       }

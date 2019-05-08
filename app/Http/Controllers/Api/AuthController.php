@@ -83,7 +83,7 @@ class AuthController extends Controller
         // $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         // $response = ['token' => $token];
         // return response($response, 200);
-        
+
         // Send an internal API request to get an access token
         $client = DB::table('oauth_clients')
             ->where('password_client', true)
@@ -139,16 +139,31 @@ class AuthController extends Controller
     /**
      * Logout a user
      *
-     * @param Request $request La requete
      * 
-     * @return void
+     * 
      */
-    public function logout(Request $request)
+    public function logout()
     {
-        $token = $request->user()->token();
-        $token->revoke();
+        $accessToken = auth()->user()->token();
 
-        $response = 'You have been succesfully logged out!';
-        return response($response, 200);
+        $refreshToken = DB::table('oauth_refresh_tokens')
+            ->where('access_token_id', $accessToken->id)
+            ->update(
+                ['revoked' => true]
+            );
+
+        $accessToken->revoke();
+
+        return response()->json(['status' => 200]);
+    }
+
+    /**
+     * Get a user
+     * 
+     * @return mixed User
+     */
+    public function getUser()
+    {
+        return auth()->user();
     }
 }

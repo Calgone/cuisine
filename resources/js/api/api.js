@@ -38,10 +38,13 @@ class API {
 
         const resourceURL = `${this.url}/${name}`;
 
-        endpoints.getAll = ({ query = {} }, config = {}) => {
-            console.log(resourceURL, query, config);
-            return axios.get(resourceURL, Object.assign({ params: { query }, config }));
-        };
+        endpoints.getAll = (params) => {
+            return axios.get(resourceURL, params);
+        }
+        // endpoints.getAll = ({ query = {} }, config = {}) => {
+        //     console.log(resourceURL, query, config);
+        //     return axios.get(resourceURL, Object.assign({ params: { query }, config }));
+        // };
 
         endpoints.getOne = ({ id }, config = {}) => axios.get(`${resourceURL}/${id}`, config);
 

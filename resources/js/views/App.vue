@@ -60,7 +60,7 @@
       </div>
     </nav>
     <h1>La cuisine de Grégory</h1>
-    <div class="container">
+    <div class="section">
       <router-view></router-view>
     </div>
   </div>
@@ -79,13 +79,15 @@ export default {
       this.authenticated = true;
       this.user = auth.user;
     });
+    Event.$on("userLoggedOut", () => {
+      this.authenticated = false;
+      this.user = null;
+      this.$router.push("/login");
+    });
   },
   methods: {
     logout() {
-      this.authenticated = false;
-      this.user = null;
       auth.logout();
-      this.$router.push("/login");
     }
   }
 };
