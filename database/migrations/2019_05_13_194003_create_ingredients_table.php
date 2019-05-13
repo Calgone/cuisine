@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEtapesTable extends Migration
+class CreateIngredientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,20 +14,12 @@ class CreateEtapesTable extends Migration
     public function up()
     {
         Schema::create(
-            'etapes',
+            'ingredients',
             function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('recette_id');
-                $table->text('description');
-                $table->boolean('complete')->default(false);
-                $table->unsignedTinyInteger('ordre');
                 $table->timestamps();
-            }
-        );
 
-        Schema::table(
-            'etapes',
-            function (Blueprint $table) {
                 $table->foreign('recette_id')
                     ->references('id')->on('recettes')
                     ->onUpdate('cascade')
@@ -43,6 +35,6 @@ class CreateEtapesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etapes');
+        Schema::dropIfExists('ingredients');
     }
 }

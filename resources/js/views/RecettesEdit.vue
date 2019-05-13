@@ -11,7 +11,7 @@
             class="input"
             name="nom"
             placeholder="nom"
-            value="{{ $recette->nom }}"
+            v-model="recette.nom"
             required
           >
         </div>
@@ -24,10 +24,11 @@
             name="description"
             class="textarea"
             id="description"
+            v-model="recette.description"
             cols="30"
             rows="10"
             required
-          >{{ $recette->description }}</textarea>
+          ></textarea>
         </div>
       </div>
       <div class="field is-grouped">
@@ -54,8 +55,10 @@ export default {
       saving: false,
       user: {
         id: null,
-        name: "",
-        email: ""
+        nom: "",
+        description: "",
+        created_at: "",
+        updated_at: ""
       }
     };
   },

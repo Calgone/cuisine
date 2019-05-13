@@ -4,9 +4,15 @@
     <div v-if="! loaded">Loading...</div>
     <form @submit.prevent="onSubmit($event)" v-else>
       <div class="field">
-        <label for="user_name">Name</label>
+        <label for="user_nom">Nom</label>
         <div class="control">
-          <input class="input" id="user_name" v-model="user.name">
+          <input class="input" id="user_nom" v-model="user.nom">
+        </div>
+      </div>
+      <div class="field">
+        <label for="user_prenom">Name</label>
+        <div class="control">
+          <input class="input" id="user_prenom" v-model="user.prenom">
         </div>
       </div>
       <div class="field">
@@ -38,8 +44,9 @@ export default {
       saving: false,
       user: {
         id: null,
-        name: "",
-        email: ""
+        nom: "",
+        prenom: "",
+        email: "",
       }
     };
   },

@@ -2798,6 +2798,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2807,8 +2824,10 @@ __webpack_require__.r(__webpack_exports__);
       saving: false,
       user: {
         id: null,
-        name: "",
-        email: ""
+        nom: "",
+        description: "",
+        created_at: "",
+        updated_at: ""
       }
     };
   },
@@ -3083,6 +3102,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3092,7 +3117,8 @@ __webpack_require__.r(__webpack_exports__);
       saving: false,
       user: {
         id: null,
-        name: "",
+        nom: "",
+        prenom: "",
         email: ""
       }
     };
@@ -6306,7 +6332,9 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "field" }, [
-              _c("label", { attrs: { for: "user_name" } }, [_vm._v("Name")]),
+              _c("label", { staticClass: "label", attrs: { for: "nom" } }, [
+                _vm._v("Nom")
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "control" }, [
                 _c("input", {
@@ -6314,19 +6342,24 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.user.name,
-                      expression: "user.name"
+                      value: _vm.recette.nom,
+                      expression: "recette.nom"
                     }
                   ],
                   staticClass: "input",
-                  attrs: { id: "user_name" },
-                  domProps: { value: _vm.user.name },
+                  attrs: {
+                    type: "text",
+                    name: "nom",
+                    placeholder: "nom",
+                    required: ""
+                  },
+                  domProps: { value: _vm.recette.nom },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.user, "name", $event.target.value)
+                      _vm.$set(_vm.recette, "nom", $event.target.value)
                     }
                   }
                 })
@@ -6334,27 +6367,37 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "field" }, [
-              _c("label", { attrs: { for: "user_email" } }, [_vm._v("Email")]),
+              _c(
+                "label",
+                { staticClass: "label", attrs: { for: "description" } },
+                [_vm._v("Description")]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "control" }, [
-                _c("input", {
+                _c("textarea", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.user.email,
-                      expression: "user.email"
+                      value: _vm.recette.description,
+                      expression: "recette.description"
                     }
                   ],
-                  staticClass: "input",
-                  attrs: { id: "user_email", type: "email" },
-                  domProps: { value: _vm.user.email },
+                  staticClass: "textarea",
+                  attrs: {
+                    name: "description",
+                    id: "description",
+                    cols: "30",
+                    rows: "10",
+                    required: ""
+                  },
+                  domProps: { value: _vm.recette.description },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.user, "email", $event.target.value)
+                      _vm.$set(_vm.recette, "description", $event.target.value)
                     }
                   }
                 })
@@ -6574,7 +6617,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "field" }, [
-              _c("label", { attrs: { for: "user_name" } }, [_vm._v("Name")]),
+              _c("label", { attrs: { for: "user_nom" } }, [_vm._v("Nom")]),
               _vm._v(" "),
               _c("div", { staticClass: "control" }, [
                 _c("input", {
@@ -6582,19 +6625,47 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.user.name,
-                      expression: "user.name"
+                      value: _vm.user.nom,
+                      expression: "user.nom"
                     }
                   ],
                   staticClass: "input",
-                  attrs: { id: "user_name" },
-                  domProps: { value: _vm.user.name },
+                  attrs: { id: "user_nom" },
+                  domProps: { value: _vm.user.nom },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.user, "name", $event.target.value)
+                      _vm.$set(_vm.user, "nom", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("label", { attrs: { for: "user_prenom" } }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "control" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.prenom,
+                      expression: "user.prenom"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: { id: "user_prenom" },
+                  domProps: { value: _vm.user.prenom },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "prenom", $event.target.value)
                     }
                   }
                 })
