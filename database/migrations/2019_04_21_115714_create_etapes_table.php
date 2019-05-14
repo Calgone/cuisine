@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateEtapesTable extends Migration
 {
@@ -19,9 +20,12 @@ class CreateEtapesTable extends Migration
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('recette_id');
                 $table->text('description');
-                $table->boolean('complete')->default(false);
                 $table->unsignedTinyInteger('ordre');
-                $table->timestamps();
+                // $table->timestamps();
+                $table->timestamp('created_at')->useCurrent();
+                $table->timestamp('updated_at')->default(
+                    DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+                );
             }
         );
 

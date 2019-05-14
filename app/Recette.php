@@ -15,11 +15,12 @@ class Recette extends Model
     {
         parent::boot();
         // Fonction qui sera appelée à chaque création de recette
-        static::created(function($recette) {
-            Mail::to($recette->owner->email)->send(
-                new RecetteCreated($recette)
-            );
-        });
+        // Désactivé car se déclenche au moment du seeding
+        // static::created(function($recette) {
+        //     Mail::to($recette->owner->email)->send(
+        //         new RecetteCreated($recette)
+        //     );
+        // });
     }
 
     public function etapes()
