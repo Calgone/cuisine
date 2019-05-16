@@ -22,7 +22,8 @@
           {{ nom }},
           <strong>Description:</strong>
           {{ description }}
-          <router-link :to="{ name: 'recettes.edit', params: { id } }">Edit</router-link>
+          <router-link :to="{ name: 'recette.view', params: { id } }">Voir</router-link>
+          <router-link :to="{ name: 'recettes.edit', params: { id } }">Éditer</router-link>
         </li>
       </ul>
       <div class="pagination">

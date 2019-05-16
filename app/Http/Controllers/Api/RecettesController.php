@@ -8,6 +8,7 @@ use App\Recette;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 // use App\Http\Resources\RecetteCollection;
+use App\Http\Resources\RecetteListResource;
 use App\Http\Resources\RecetteResource;
 
 /**
@@ -26,7 +27,7 @@ class RecettesController extends Controller
      */
     public function index()
     {
-        return RecetteResource::collection(Recette::paginate(10));
+        return RecetteListResource::collection(Recette::paginate(10));
     }
 
     /**
@@ -50,7 +51,7 @@ class RecettesController extends Controller
      */
     public function show(Recette $recette)
     {
-        //
+        return new RecetteResource($recette);
     }
 
     /**

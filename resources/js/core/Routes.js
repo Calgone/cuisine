@@ -8,6 +8,7 @@ import UsersIndex from '../views/UsersIndex';
 import UsersEdit from '../views/UsersEdit';
 import RecettesIndex from '../views/RecettesIndex';
 import RecettesEdit from '../views/RecettesEdit';
+import Recette from '../views/Recette';
 import NotFound from '../views/NotFound';
 
 let routes = [
@@ -52,6 +53,11 @@ let routes = [
         path: '/recettes',
         name: 'recettes.index',
         component: RecettesIndex,
+    },
+    {
+        path: '/recette/:id',
+        name: 'recette.view',
+        component: Recette
     },
     {
         path: '/recettes/:id/edit',

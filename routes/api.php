@@ -52,7 +52,6 @@ Route::get(
 
 Route::namespace('Api')->group(
     function () {
-        
         Route::apiResource('recettes', 'RecettesController');
     }
 );
