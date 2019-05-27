@@ -92,3 +92,14 @@ export default {
   }
 };
 </script>
+<style>
+.main {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+div#contentp {
+  flex: 1;
+}
+</style>

@@ -26,15 +26,19 @@
           <router-link :to="{ name: 'recettes.edit', params: { id } }">Éditer</router-link>
         </li>
       </ul>
-      <div class="pagination">
-        <button class="button is-rounded" :disabled="! prevPage" @click.prevent="goToPrev">Previous</button>
+      <nav class="pagination" role="pagination" aria-label="pagination">
+        <a
+          class="pagination-previous"
+          :disabled="! prevPage"
+          @click.prevent="goToPrev"
+        >Previous</a>
         {{ paginationCount }}
-        <button
-          class="button is-rounded"
+        <a
+          class="pagination-next"
           :disabled="! nextPage"
           @click.prevent="goToNext"
-        >Next</button>
-      </div>
+        >Next</a>
+      </nav>
     </div>
   </div>
 </template>
