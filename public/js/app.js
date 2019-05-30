@@ -2834,7 +2834,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/users */ "./resources/js/api/users.js");
 //
 //
 //
@@ -2881,14 +2880,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+// import api from "../api/users";
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       message: null,
       loaded: false,
       saving: false,
-      user: {
+      recette: {
         id: null,
         nom: "",
         description: "",
@@ -2903,7 +2902,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // Form submit event
       this.saving = true;
-      _api_users__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.user.id, {
+      api.update(this.user.id, {
         name: this.user.name,
         email: this.user.email
       }).then(function (response) {
@@ -2924,7 +2923,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.saving = true;
-      _api_users__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"](this.user.id).then(function (response) {
+      api["delete"](this.user.id).then(function (response) {
         console.log(response);
         _this2.message = "Utilisateur supprimé.";
         setTimeout(function () {
@@ -2942,7 +2941,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this3 = this;
 
     // Load user details
-    _api_users__WEBPACK_IMPORTED_MODULE_0__["default"].find(this.$route.params.id).then(function (response) {
+    console.log(this.$route.params.id);
+    var id = this.$route.params.id;
+    this.api.endpoints.recettes.getOne({
+      id: id
+    }).then(function (response) {
       _this3.loaded = true;
       _this3.user = response.data.data;
     })["catch"](function (err) {
@@ -2964,11 +2967,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/api */ "./resources/js/api/api.js");
-//
-//
-//
-//
 //
 //
 //
@@ -3010,27 +3008,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 // import axios from "axios";
-
-var myApi = new _api_api__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  url: "/api"
-});
-myApi.createEntity({
-  name: "recettes"
-}); // console.log(myApi.endpoints);
-
-var getRecettes = function getRecettes(page, callback) {
-  var params = {
-    page: page
-  };
-  myApi.endpoints.recettes.getAll({
-    params: params
-  }).then(function (response) {
-    callback(null, response.data);
-  })["catch"](function (error) {
-    callback(error, error.response.data);
-  });
-};
-
+// import API from "../api/api";
+// const myApi = new API({ url: "/api" });
+// api.createEntity({ name: "recettes" });
+// // console.log(myApi.endpoints);
+// const getRecettes = (page, callback) => {
+//   const params = { page };
+//   api.endpoints.recettes
+//     .getAll({ params })
+//     .then(response => {
+//       callback(null, response.data);
+//     })
+//     .catch(error => {
+//       callback(error, error.response.data);
+//     });
+// };
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3072,48 +3064,64 @@ var getRecettes = function getRecettes(page, callback) {
       return "".concat(current_page, " of ").concat(last_page);
     }
   },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    getRecettes(to.query.page, function (err, data) {
-      // on a pas accès à this car le composant n'est pas rendu
-      // donc on envoie un callback à next pour lancer setData après affichage
-      next(function (vm) {
-        return vm.setData(err, data);
-      });
-    });
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   getRecettes(to.query.page, (err, data) => {
+  //     // on a pas accès à this car le composant n'est pas rendu
+  //     // donc on envoie un callback à next pour lancer setData après affichage
+  //     next(vm => vm.setData(err, data));
+  //   });
+  // },
   // when route changes and this component is already rendered,
   // the logic will be slightly different.
   // Ici on a accès à "this" sur le composant car il est affiché
-  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
-    var _this = this;
-
-    this.loading = true;
-    this.recettes = this.links = this.meta = null; // console.log(to, from, next);
-
-    getRecettes(to.query.page, function (err, data) {
-      _this.setData(err, data);
-
-      _this.loading = false;
-      next(); // pas besoin du callback cette fois, on a utilisé this.setData() juste au dessus
+  // beforeRouteUpdate(to, from, next) {
+  //   this.loading = true;
+  //   this.recettes = this.links = this.meta = null;
+  //   getRecettes(to.query.page, (err, data) => {
+  //     this.setData(err, data);
+  //     this.loading = false;
+  //     next(); // pas besoin du callback cette fois, on a utilisé this.setData() juste au dessus
+  //   });
+  // },
+  created: function created() {
+    this.api.createEntity({
+      name: "recettes"
     });
+    this.fetchData(1);
   },
-  //   created() {
-  //     this.fetchData();
-  //   },
   methods: {
     goToNext: function goToNext() {
-      this.$router.push({
-        query: {
-          page: this.nextPage
-        }
-      });
+      // this.$router.push({
+      //   query: {
+      //     page: this.nextPage
+      //   }
+      // });
+      this.fetchData(this.nextPage);
     },
     goToPrev: function goToPrev() {
-      this.$router.push({
-        name: "recettes.index",
-        query: {
-          page: this.prevPage
-        }
+      // this.$router.push({
+      //   name: "recettes.index",
+      //   query: {
+      //     page: this.prevPage
+      //   }
+      // });
+      this.fetchData(this.prevPage);
+    },
+    fetchData: function fetchData() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.error = this.users = null;
+      this.loading = true;
+      var params = {
+        page: page
+      };
+      this.api.endpoints.recettes.getAll({
+        params: params
+      }).then(function (response) {
+        _this.setData(null, response.data);
+      })["catch"](function (error) {
+        _this.setData(error, error.response.data);
       });
     },
     setData: function setData(err, _ref) {
@@ -3128,6 +3136,8 @@ var getRecettes = function getRecettes(page, callback) {
         this.links = links;
         this.meta = meta;
       }
+
+      this.loading = false;
     }
   }
 });
@@ -3200,7 +3210,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // Form submit event
       this.saving = true;
-      _api_users__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.user.id, {
+      this.api.update(this.user.id, {
         name: this.user.name,
         email: this.user.email
       }).then(function (response) {
@@ -3518,25 +3528,6 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.action-link[data-v-49962cc0] {\n    cursor: pointer;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/App.vue?vue&type=style&index=0&lang=css&":
-/*!****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/App.vue?vue&type=style&index=0&lang=css& ***!
-  \****************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.main {\r\n  display: flex;\r\n  min-height: 100vh;\r\n  flex-direction: column;\n}\ndiv#contentp {\r\n  flex: 1;\n}\r\n", ""]);
 
 // exports
 
@@ -4198,36 +4189,6 @@ options.transform = transform
 options.insertInto = undefined;
 
 var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/App.vue?vue&type=style&index=0&lang=css&":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/App.vue?vue&type=style&index=0&lang=css& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/App.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -21900,7 +21861,7 @@ function () {
   }
   /**
    * Create and store a single entity's endpoints
-   * @param {A entity Object} entity
+   * @param {An entity Object} entity
    */
 
 
@@ -21971,6 +21932,25 @@ function () {
       };
 
       return endpoints;
+    }
+  }, {
+    key: "call",
+    value: function call(requestType, url) {
+      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      return new Promise(function (resolve, reject) {
+        axios[requestType](url, data).then(function (response) {
+          resolve(response);
+        })["catch"](function (_ref6) {
+          var response = _ref6.response;
+
+          if (response.status === 401) {
+            console.log('401 !');
+            auth.logout();
+          }
+
+          reject(response);
+        });
+      });
     }
   }]);
 
@@ -22057,7 +22037,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _views_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/App */ "./resources/js/views/App.vue");
 /* harmony import */ var _core_Routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./core/Routes */ "./resources/js/core/Routes.js");
-/* harmony import */ var _core_Api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core/Api */ "./resources/js/core/Api.js");
+/* harmony import */ var _api_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./api/api */ "./resources/js/api/api.js");
 /* harmony import */ var _core_Auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core/Auth */ "./resources/js/core/Auth.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -22089,15 +22069,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // import Api from './core/Api';
 
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 window.Event = new vue__WEBPACK_IMPORTED_MODULE_0___default.a(); // gère l'authentification avec la classe Auth
+// window.api = new Api();
 
-window.api = new _core_Api__WEBPACK_IMPORTED_MODULE_4__["default"]();
+window.api = new _api_api__WEBPACK_IMPORTED_MODULE_4__["default"]({
+  url: "/api"
+});
+api.createEntity({
+  name: "users"
+});
 window.auth = new _core_Auth__WEBPACK_IMPORTED_MODULE_5__["default"]();
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.api = window.api;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('passport-clients', __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('passport-authorized-clients', __webpack_require__(/*! ./components/passport/AuthorizedClients.vue */ "./resources/js/components/passport/AuthorizedClients.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]);
@@ -22437,11 +22425,13 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./resources/js/core/Api.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -22502,7 +22492,7 @@ function () {
       api.call('get', '/api/get-user').then(function (_ref) {
         var data = _ref.data;
         _this.user = data;
-      });
+      }); // console.log(api);
     }
   }]);
 
@@ -22693,9 +22683,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_vue_vue_type_template_id_91ac6b5c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.vue?vue&type=template&id=91ac6b5c& */ "./resources/js/views/App.vue?vue&type=template&id=91ac6b5c&");
 /* harmony import */ var _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue?vue&type=script&lang=js& */ "./resources/js/views/App.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _App_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App.vue?vue&type=style&index=0&lang=css& */ "./resources/js/views/App.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -22703,7 +22691,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _App_vue_vue_type_template_id_91ac6b5c___WEBPACK_IMPORTED_MODULE_0__["render"],
   _App_vue_vue_type_template_id_91ac6b5c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -22732,22 +22720,6 @@ component.options.__file = "resources/js/views/App.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/App.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/views/App.vue?vue&type=style&index=0&lang=css&":
-/*!*********************************************************************!*\
-  !*** ./resources/js/views/App.vue?vue&type=style&index=0&lang=css& ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/App.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

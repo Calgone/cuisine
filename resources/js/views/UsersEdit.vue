@@ -55,7 +55,7 @@ export default {
       // Form submit event
       this.saving = true;
 
-      api
+      this.api
         .update(this.user.id, {
           name: this.user.name,
           email: this.user.email

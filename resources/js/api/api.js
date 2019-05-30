@@ -11,7 +11,7 @@ class API {
     }
     /**
      * Create and store a single entity's endpoints
-     * @param {A entity Object} entity
+     * @param {An entity Object} entity
      */
     createEntity(entity) {
         /**
@@ -39,7 +39,7 @@ class API {
         const resourceURL = `${this.url}/${name}`;
 
         endpoints.getAll = (params) => axios.get(resourceURL, params);
-        
+
         // endpoints.getAll = ({ query = {} }, config = {}) => {
         //     console.log(resourceURL, query, config);
         //     return axios.get(resourceURL, Object.assign({ params: { query }, config }));
@@ -59,6 +59,22 @@ class API {
 
     }
 
+    call(requestType, url, data = null) {
+        return new Promise((resolve, reject) => {
+            axios[requestType](url, data)
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(({ response }) => {
+                    if (response.status === 401) {
+                        console.log('401 !');
+                        auth.logout();
+                    }
+
+                    reject(response);
+                });
+        });
+    }
 }
 
 export default API

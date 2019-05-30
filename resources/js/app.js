@@ -36,14 +36,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import App from './views/App';
 import router from './core/Routes';
-import Api from './core/Api';
+// import Api from './core/Api';
+import API from "./api/api";
 import Auth from './core/Auth';
 
 window.Vue = require('vue');
 Vue.use(VueRouter)
 window.Event = new Vue; // gère l'authentification avec la classe Auth
-window.api = new Api();
+// window.api = new Api();
+window.api = new API({ url: "/api" });
+api.createEntity({ name: "users" });
 window.auth = new Auth();
+
+Vue.prototype.api = window.api;
+
 
 Vue.component(
     'passport-clients',

@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import api from "../api/users";
+// import api from "../api/users";
 
 export default {
   data() {
@@ -53,7 +53,7 @@ export default {
       message: null,
       loaded: false,
       saving: false,
-      user: {
+      recette: {
         id: null,
         nom: "",
         description: "",
@@ -100,8 +100,10 @@ export default {
   },
   created() {
     // Load user details
-    api
-      .find(this.$route.params.id)
+    console.log(this.$route.params.id);
+    const id = this.$route.params.id;
+    this.api.endpoints.recettes
+      .getOne({id})
       .then(response => {
         this.loaded = true;
         this.user = response.data.data;

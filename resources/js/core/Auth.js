@@ -1,4 +1,5 @@
 import axios from "axios";
+import Api from "./Api";
 
 class Auth {
 
@@ -52,6 +53,7 @@ class Auth {
             .then(({data}) => {
                 this.user = data;
             });
+        // console.log(api);
     }
 }
 
