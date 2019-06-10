@@ -64,7 +64,16 @@ class RecettesController extends Controller
      */
     public function update(Request $request, Recette $recette)
     {
-        //
+        $data = $request->validate(
+            [
+                'nom' => 'required',
+                'description' => 'required',
+            ]
+        );
+
+        $recette->update($data);
+
+        return new RecetteResource($recette);
     }
 
     /**
@@ -76,6 +85,9 @@ class RecettesController extends Controller
      */
     public function destroy(Recette $recette)
     {
-        //
+        $recette->etapes()->delete();
+        $recette->delete();
+
+        return response(null, 204);
     }
 }

@@ -67,15 +67,12 @@ export default {
       // Form submit event
       this.saving = true;
 
-      api
-        .update(this.user.id, {
-          name: this.user.name,
-          email: this.user.email
-        })
+      this.api.endpoints.recettes
+        .update(this.recette)
         .then(response => {
-          this.message = "User updated";
+          this.message = "Recette mise à jour";
           setTimeout(() => (this.message = null), 2000);
-          this.user = response.data.data;
+          this.recette = response.data.data;
         })
         .catch(error => {
           console.log(error);
@@ -87,11 +84,11 @@ export default {
     },
     onDelete() {
       this.saving = true;
-
-      api.delete(this.user.id).then(response => {
-        console.log(response);
-        this.message = "Utilisateur supprimé.";
-        setTimeout(() => this.$router.push({ name: "users.index" }), 2000);
+      console.log(this.recette.id);
+      this.api.endpoints.recettes.delete(this.recette).then(response => {
+        // console.log(response);
+        this.message = "Recette supprimée.";
+        setTimeout(() => this.$router.push({ name: "recettes.index" }), 2000);
       });
     },
     retour() {
@@ -99,14 +96,15 @@ export default {
     }
   },
   created() {
-    // Load user details
+    // Load recette details
     console.log(this.$route.params.id);
     const id = this.$route.params.id;
     this.api.endpoints.recettes
-      .getOne({id})
+      .getOne({ id })
       .then(response => {
         this.loaded = true;
-        this.user = response.data.data;
+        this.recette = response.data.data;
+        console.log(response.data.data);
       })
       .catch(err => {
         this.$router.push({ name: "404" });

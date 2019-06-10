@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAlimentConstituantsTable extends Migration
+class CreateAlimConstTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateAlimentConstituantsTable extends Migration
     public function up()
     {
         Schema::create(
-            'aliment_constituants',
+            'alim_const',
             function (Blueprint $table) {
                 $table->unsignedBigInteger('const_code')->primary();
                 $table->text('const_nom_fr', 80);
@@ -30,6 +30,6 @@ class CreateAlimentConstituantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aliment_constituants');
+        Schema::dropIfExists('alim_const');
     }
 }

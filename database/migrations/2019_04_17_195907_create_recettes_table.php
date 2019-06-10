@@ -35,6 +35,7 @@ class CreateRecettesTable extends Migration
 
                 $table->foreign('owner_id')
                     ->references('id')->on('users')
+                    ->onUpdate('cascade')
                     ->onDelete('restrict');
             }
         );

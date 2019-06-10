@@ -45,7 +45,7 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div v-if="authenticated && user">
-              <p>Hello, {{ user.prenom }}</p>
+              <p>Bienvenue {{ user.prenom }}</p>
 
               <button @click="logout" class="button is-danger is-inverted">déconnexion</button>
             </div>

@@ -2902,15 +2902,12 @@ __webpack_require__.r(__webpack_exports__);
 
       // Form submit event
       this.saving = true;
-      api.update(this.user.id, {
-        name: this.user.name,
-        email: this.user.email
-      }).then(function (response) {
-        _this.message = "User updated";
+      this.api.endpoints.recettes.update(this.recette).then(function (response) {
+        _this.message = "Recette mise à jour";
         setTimeout(function () {
           return _this.message = null;
         }, 2000);
-        _this.user = response.data.data;
+        _this.recette = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       }).then(function (_) {
@@ -2923,12 +2920,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.saving = true;
-      api["delete"](this.user.id).then(function (response) {
-        console.log(response);
-        _this2.message = "Utilisateur supprimé.";
+      console.log(this.recette.id);
+      this.api.endpoints.recettes["delete"](this.recette).then(function (response) {
+        // console.log(response);
+        _this2.message = "Recette supprimée.";
         setTimeout(function () {
           return _this2.$router.push({
-            name: "users.index"
+            name: "recettes.index"
           });
         }, 2000);
       });
@@ -2940,14 +2938,15 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this3 = this;
 
-    // Load user details
+    // Load recette details
     console.log(this.$route.params.id);
     var id = this.$route.params.id;
     this.api.endpoints.recettes.getOne({
       id: id
     }).then(function (response) {
       _this3.loaded = true;
-      _this3.user = response.data.data;
+      _this3.recette = response.data.data;
+      console.log(response.data.data);
     })["catch"](function (err) {
       _this3.$router.push({
         name: "404"
@@ -6017,7 +6016,7 @@ var render = function() {
               _c("div", { staticClass: "navbar-item" }, [
                 _vm.authenticated && _vm.user
                   ? _c("div", [
-                      _c("p", [_vm._v("Hello, " + _vm._s(_vm.user.prenom))]),
+                      _c("p", [_vm._v("Bienvenue " + _vm._s(_vm.user.prenom))]),
                       _vm._v(" "),
                       _c(
                         "button",

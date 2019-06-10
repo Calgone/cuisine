@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAlimentsTable extends Migration
+class CreateAlimTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +14,23 @@ class CreateAlimentsTable extends Migration
     public function up()
     {
         Schema::create(
-            'aliments',
+            'alim',
             function (Blueprint $table) {
-                $table->unsignedBigInteger('id')->primary();
+                $table->unsignedBigInteger('alim_code')->primary();
                 $table->text('alim_nom_fr', 255);
                 $table->text('alim_nom_en', 255);
                 $table->char('alim_grp_code', 2);
                 $table->char('alim_ssgrp_code', 4);
                 $table->char('alim_ssssgrp_code', 6);
-                $table->timestamps();
+                // $table->timestamps()->useCurrent();
+                $table->timestamp('created_at')->useCurrent();
+                $table->timestamp('updated_at')->default(
+                    DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+                );
+                $table->foreign('alim_grp_code')
+                    ->references('alim_grp_code')->on('alim_grp')
+                    ->onUpdate('cascade')
+                    ->onDelete('restrict');
             }
         );
     }
@@ -34,6 +42,6 @@ class CreateAlimentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aliments');
+        Schema::dropIfExists('alim');
     }
 }

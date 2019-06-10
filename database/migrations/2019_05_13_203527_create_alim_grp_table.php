@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAlimentGroupesTable extends Migration
+class CreateAlimGrpTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,9 @@ class CreateAlimentGroupesTable extends Migration
     public function up()
     {
         Schema::create(
-            'aliment_groupes',
+            'alim_grp',
             function (Blueprint $table) {
-                $table->bigIncrements('id'); // A voir le Ciqual utilise une clé des groupes sur 3 champs
+                $table->bigIncrements('id'); // Le Ciqual utilise une clé sur 3 champs
                 $table->char('alim_grp_code', 2);
                 $table->char('alim_ssgrp_code', 4);
                 $table->char('alim_ssssgrp_code', 6);
@@ -26,7 +26,10 @@ class CreateAlimentGroupesTable extends Migration
                 $table->char('alim_ssgrp_nom_eng', 255);
                 $table->char('alim_ssssgrp_nom_fr', 255);
                 $table->char('alim_ssssgrp_nom_eng', 255);
-                $table->timestamps();
+                $table->timestamp('created_at')->useCurrent();
+                $table->timestamp('updated_at')->default(
+                    DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+                );
             }
         );
     }
@@ -38,6 +41,6 @@ class CreateAlimentGroupesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aliment_groupes');
+        Schema::dropIfExists('alim_grp');
     }
 }

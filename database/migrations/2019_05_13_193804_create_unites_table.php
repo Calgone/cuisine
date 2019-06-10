@@ -21,7 +21,7 @@ class CreateUnitesTable extends Migration
                 $table->char('origine', 2);
                 $table->string('nom', 100);
                 $table->string('nom_court', 10);
-                $table->timestamps();
+                // $table->timestamps();
             }
         );
     }

@@ -47,7 +47,7 @@ window.Event = new Vue; // gère l'authentification avec la classe Auth
 window.api = new API({ url: "/api" });
 api.createEntity({ name: "users" });
 window.auth = new Auth();
-
+//https://stackoverflow.com/questions/48650107/use-axios-globally-in-all-my-components-vue
 Vue.prototype.api = window.api;
 
 
