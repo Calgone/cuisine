@@ -30,13 +30,14 @@
     <div>
         {{ recette.description }}
     </div>
-    <div>
-        <ul>
+    <div class="content">
+        <ol type="1">
             <li v-for="etape in recette.etapes" v-bind:key="etape.id">
                 {{ etape.description }}
             </li>
-        </ul>
+        </ol>
     </div>
+    <router-link v-if="recette.id" :to="{ name: 'recettes.edit', params: { id: recette.id } }">Éditer la recette</router-link>
   </div>
 </template>
 <script>
@@ -45,7 +46,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      recette: []
+      recette: {
+      }
     };
   },
   created() {

@@ -24,10 +24,13 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 ## Deployment
 
 - Clone the project
-- Run the migrations 
+- composer install
+- npm install
+- Run the migrations
 - Run the seeds
-- Register a user with Passport
 - Import Ciqual tables from csv (alim_grp, alim, compo, const)
+- Register a user with Passport [link](https://medium.com/@martin.riedweg/laravel-5-7-api-authentification-with-laravel-passport-92b909e12528)
+
 
 ## Contributing
 

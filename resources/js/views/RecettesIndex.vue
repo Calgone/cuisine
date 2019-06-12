@@ -39,25 +39,6 @@
   </div>
 </template>
 <script>
-// import axios from "axios";
-// import API from "../api/api";
-
-// const myApi = new API({ url: "/api" });
-// api.createEntity({ name: "recettes" });
-// // console.log(myApi.endpoints);
-
-// const getRecettes = (page, callback) => {
-//   const params = { page };
-
-//   api.endpoints.recettes
-//     .getAll({ params })
-//     .then(response => {
-//       callback(null, response.data);
-//     })
-//     .catch(error => {
-//       callback(error, error.response.data);
-//     });
-// };
 
 export default {
   data() {
@@ -99,46 +80,16 @@ export default {
       return `${current_page} of ${last_page}`;
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   getRecettes(to.query.page, (err, data) => {
-  //     // on a pas accès à this car le composant n'est pas rendu
-  //     // donc on envoie un callback à next pour lancer setData après affichage
-  //     next(vm => vm.setData(err, data));
-  //   });
-  // },
-  // when route changes and this component is already rendered,
-  // the logic will be slightly different.
-  // Ici on a accès à "this" sur le composant car il est affiché
-  // beforeRouteUpdate(to, from, next) {
-  //   this.loading = true;
-  //   this.recettes = this.links = this.meta = null;
-  //   getRecettes(to.query.page, (err, data) => {
-  //     this.setData(err, data);
-  //     this.loading = false;
-  //     next(); // pas besoin du callback cette fois, on a utilisé this.setData() juste au dessus
-  //   });
-  // },
   created() {
-    this.api.createEntity({ name: "recettes" });
+    
 
     this.fetchData(1);
   },
   methods: {
     goToNext() {
-      // this.$router.push({
-      //   query: {
-      //     page: this.nextPage
-      //   }
-      // });
       this.fetchData(this.nextPage);
     },
     goToPrev() {
-      // this.$router.push({
-      //   name: "recettes.index",
-      //   query: {
-      //     page: this.prevPage
-      //   }
-      // });
       this.fetchData(this.prevPage);
     },
     fetchData(page = 1) {

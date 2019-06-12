@@ -32,14 +32,25 @@
         </div>
       </div>
       <div class="field is-grouped">
-        <button class="button is-link" type="submit" :disabled="saving">Valider</button>
-        <button
-          class="button is-danger"
-          type="button"
-          :disabled="saving"
-          @click.prevent="onDelete($event)"
-        >Supprimer</button>
-        <button class="button is-text" type="button" @click="retour">Retour</button>
+        <p class="control">
+          <button class="button is-link" type="submit" :disabled="saving">
+            <span class="icon is-small">
+              <i class="fas fa-check"></i>
+            </span>
+            <span>Valider</span>
+          </button>
+        </p>
+        <p class="control">
+          <button
+            class="button is-danger"
+            type="button"
+            :disabled="saving"
+            @click.prevent="onDelete($event)"
+          >Supprimer</button>
+        </p>
+        <p class="control">
+          <button class="button is-text" type="button" @click="retour">Retour</button>
+        </p>
       </div>
     </form>
   </div>

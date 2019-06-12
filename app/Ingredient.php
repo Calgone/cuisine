@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
-    public function recette()
+    public function ingredientGroup()
     {
-        return $this->belongsTo(Recette::class);
+        return $this->belongsTo(IngredientGroup::class);
     }
 }

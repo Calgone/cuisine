@@ -28,9 +28,9 @@ class Recette extends Model
         return $this->hasMany(Etape::class);
     }
 
-    public function ingredients()
+    public function ingredientGroups()
     {
-        return $this->hasMany(Ingredient::class);
+        return $this->hasMany(IngredientGroup::class);
     }
     
     public function addEtape($etape)

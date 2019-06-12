@@ -20,8 +20,8 @@ class CreateIngredientsTable extends Migration
                 $table->unsignedBigInteger('recette_id');
                 $table->timestamps();
 
-                $table->foreign('recette_id')
-                    ->references('id')->on('recettes')
+                $table->foreign('ingredient_group_id')
+                    ->references('id')->on('ingredient_groups')
                     ->onUpdate('cascade')
                     ->onDelete('restrict');
             }
