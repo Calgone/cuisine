@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\RecetteCreated;
+use App\Mail\RecipeCreated;
 
-class Recette extends Model
+class Recipe extends Model
 {
     protected $fillable = ['nom', 'description', 'owner_id'];
 
@@ -23,9 +23,9 @@ class Recette extends Model
         // });
     }
 
-    public function etapes()
+    public function steps()
     {
-        return $this->hasMany(Etape::class);
+        return $this->hasMany(Step::class);
     }
 
     public function ingredientGroups()
@@ -33,11 +33,11 @@ class Recette extends Model
         return $this->hasMany(IngredientGroup::class);
     }
     
-    public function addEtape($etape)
+    public function addStep($step)
     {
-        $description = $etape['description'];
-        $ordre = 1;
-        $this->etapes()->create(compact('description', 'ordre'));
+        $description = $step['description'];
+        $order = 1;
+        $this->steps()->create(compact('description', 'ordre'));
     }
 
     public function owner()

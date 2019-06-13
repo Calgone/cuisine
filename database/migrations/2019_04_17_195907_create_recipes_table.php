@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
 
-class CreateEtapesTable extends Migration
+class CreateRecettesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,25 +14,27 @@ class CreateEtapesTable extends Migration
     public function up()
     {
         Schema::create(
-            'etapes',
+            'recipes',
             function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->unsignedBigInteger('recette_id');
+                $table->unsignedBigInteger('owner_id');
+                $table->string('title', 200);
                 $table->text('description');
-                $table->unsignedTinyInteger('ordre');
+                $table->unsignedTinyInteger('nb_people');
+                $table->unsignedSmallInteger('prep_minutes');
+                $table->unsignedSmallInteger('cook_minutes');
+                $table->unsignedSmallInteger('rest_minutes');
+                $table->unsignedDecimal('cost', 8, 2);
+                $table->unsignedTinyInteger('difficulty');
+                $table->string('img_path', 255);
                 // $table->timestamps();
                 $table->timestamp('created_at')->useCurrent();
                 $table->timestamp('updated_at')->default(
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
-            }
-        );
 
-        Schema::table(
-            'etapes',
-            function (Blueprint $table) {
-                $table->foreign('recette_id')
-                    ->references('id')->on('recettes')
+                $table->foreign('owner_id')
+                    ->references('id')->on('users')
                     ->onUpdate('cascade')
                     ->onDelete('restrict');
             }
@@ -47,6 +48,6 @@ class CreateEtapesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etapes');
+        Schema::dropIfExists('recipes');
     }
 }

@@ -16,17 +16,17 @@ class RecetteResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nom' => $this->nom,
+            'name' => $this->name,
             'description' => $this->description,
             'owner' => $this->owner,
-            'nb_personnes' => $this->nb_personnes,
-            'prepa_minutes' => $this->prepa_minutes,
-            'cuisson_minutes' => $this->cuisson_minutes,
-            'repos_minutes' => $this->repos_minutes,
-            'cout' => $this->cout,
-            'difficulte' => $this->difficulte,
+            'nb_people' => $this->nb_people,
+            'prep_minutes' => $this->prep_minutes,
+            'cook_minutes' => $this->cook_minutes,
+            'rest_minutes' => $this->rest_minutes,
+            'cost' => $this->cost,
+            'difficulty' => $this->difficulty,
             'img_path' => $this->img_path,
-            'etapes' => $this->etapes,
+            'steps' => $this->steps,
         ];
     }
 }

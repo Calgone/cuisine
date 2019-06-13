@@ -13,7 +13,7 @@ class UnitesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('unites')->truncate();
+        DB::table('units')->truncate();
 
         Unite::create(
             [

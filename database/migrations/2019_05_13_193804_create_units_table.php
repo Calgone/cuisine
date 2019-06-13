@@ -17,10 +17,10 @@ class CreateUnitesTable extends Migration
             'unites',
             function (Blueprint $table) {
                 $table->unsignedTinyInteger('id')->primary();
-                $table->string('categorie', 20)->index();
-                $table->char('origine', 2);
-                $table->string('nom', 100);
-                $table->string('nom_court', 10);
+                $table->string('category', 20)->index();
+                $table->char('origin', 2);
+                $table->string('name', 100);
+                $table->string('short_name', 10);
                 // $table->timestamps();
             }
         );

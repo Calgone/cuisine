@@ -50,7 +50,7 @@ window.auth = new Auth();
 //https://stackoverflow.com/questions/48650107/use-axios-globally-in-all-my-components-vue
 Vue.prototype.api = window.api;
 
-api.createEntity({ name: "recettes" });
+api.createEntity({ name: "recipes" });
 // Vue.component(
 //     'passport-clients',
 //     require('./components/passport/Clients.vue').default

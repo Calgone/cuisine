@@ -6,9 +6,9 @@ import Dashboard from '../views/Dashboard';
 import Hello from '../views/Hello';
 import UsersIndex from '../views/UsersIndex';
 import UsersEdit from '../views/UsersEdit';
-import RecettesIndex from '../views/RecettesIndex';
-import RecettesEdit from '../views/RecettesEdit';
-import Recette from '../views/Recette';
+import RecipesIndex from '../views/RecipesIndex';
+import RecipeEdit from '../views/RecipeEdit';
+import Recipe from '../views/Recipe';
 import NotFound from '../views/NotFound';
 
 let routes = [
@@ -50,24 +50,24 @@ let routes = [
         component: UsersEdit
     },
     {
-        path: '/recettes',
-        name: 'recettes.index',
-        component: RecettesIndex,
+        path: '/recipes',
+        name: 'recipes.index',
+        component: RecipesIndex,
     },
     {
-        path: '/recette/:id',
-        name: 'recette.view',
-        component: Recette
+        path: '/recipe/:id',
+        name: 'recipe.view',
+        component: Recipe
     },
     {
-        path: '/recettes/:id/edit',
-        name: 'recettes.edit',
-        component: RecettesEdit
+        path: '/recipe/:id/edit',
+        name: 'recipe.edit',
+        component: RecipeEdit
     },
     {
-        path: '/recettes/create',
-        name: 'recettes.create',
-        component: RecettesEdit
+        path: '/recipe/create',
+        name: 'recipe.create',
+        component: RecipeEdit
     },
     { path: '/404', name: '404', component: NotFound },
     { path: '*', redirect: '/404' },

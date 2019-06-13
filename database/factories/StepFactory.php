@@ -7,7 +7,7 @@ $factory->define(
     function (Faker $faker) {
         return [
             'description' => $faker->text(100),
-            'ordre' => $faker->numberBetween(1, 10),
+            'order' => $faker->numberBetween(1, 10),
         ];
     }
 );

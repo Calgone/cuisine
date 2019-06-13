@@ -1,5 +1,5 @@
 import axios from "axios";
-import Api from "./Api";
+// import Api from "./Api";
 
 class Auth {
 

@@ -13,13 +13,13 @@ class CreateIngredientGroupesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ingredient_groupes', function (Blueprint $table) {
+        Schema::create('ingredient_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nom', 200);
+            $table->string('name', 200);
             $table->timestamps();
 
-            $table->foreign('recette_id')
-                ->references('id')->on('recettes')
+            $table->foreign('recipe_id')
+                ->references('id')->on('recipe')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });

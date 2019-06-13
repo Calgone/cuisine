@@ -23,7 +23,7 @@
           <strong>Description:</strong>
           {{ description }}
           <router-link :to="{ name: 'recette.view', params: { id } }">Voir</router-link>
-          <router-link :to="{ name: 'recettes.edit', params: { id } }">Éditer</router-link>
+          <router-link v-if="authenticated" :to="{ name: 'recettes.edit', params: { id } }">Éditer</router-link>
         </li>
       </ul>
       <nav class="pagination" role="pagination" aria-label="pagination">
@@ -43,6 +43,7 @@
 export default {
   data() {
     return {
+      authenticated: auth.check(),
       loading: false,
       recettes: null,
       meta: null,
@@ -81,7 +82,7 @@ export default {
     }
   },
   created() {
-    
+    console.log(auth.check());
 
     this.fetchData(1);
   },

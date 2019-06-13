@@ -4,12 +4,12 @@
  */
 namespace App\Http\Controllers\Api;
 
-use App\Recette;
+use App\Recipe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// use App\Http\Resources\RecetteCollection;
-use App\Http\Resources\RecetteListResource;
-use App\Http\Resources\RecetteResource;
+// use App\Http\Resources\RecipeCollection;
+use App\Http\Resources\RecipeListResource;
+use App\Http\Resources\RecipeResource;
 
 /**
  * Controller pour les recettes
@@ -18,7 +18,7 @@ use App\Http\Resources\RecetteResource;
  * 
  */
 
-class RecettesController extends Controller
+class RecipesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class RecettesController extends Controller
      */
     public function index()
     {
-        return RecetteListResource::collection(Recette::paginate(10));
+        return RecipeListResource::collection(Recipe::paginate(10));
     }
 
     /**
@@ -45,48 +45,48 @@ class RecettesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Recette $recette La recette
+     * @param \App\Recipe $recipe La recette
      * 
      * @return \Illuminate\Http\Response
      */
-    public function show(Recette $recette)
+    public function show(Recipe $recipe)
     {
-        return new RecetteResource($recette);
+        return new RecipeResource($recipe);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request La requete
-     * @param \App\Recette             $recette La recette
+     * @param \App\Recipe             $recipe La recette
      * 
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recette $recette)
+    public function update(Request $request, Recipe $recipe)
     {
         $data = $request->validate(
             [
-                'nom' => 'required',
+                'title' => 'required',
                 'description' => 'required',
             ]
         );
 
-        $recette->update($data);
+        $recipe->update($data);
 
-        return new RecetteResource($recette);
+        return new RecipeResource($recipe);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Recette $recette La recette
+     * @param \App\Recipe $recipe La recette
      * 
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recette $recette)
+    public function destroy(Recipe $recipe)
     {
-        $recette->etapes()->delete();
-        $recette->delete();
+        // $recipe->steps()->delete();
+        $recipe->delete();
 
         return response(null, 204);
     }

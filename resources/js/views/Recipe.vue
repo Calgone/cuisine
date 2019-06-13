@@ -37,7 +37,7 @@
             </li>
         </ol>
     </div>
-    <router-link v-if="recette.id" :to="{ name: 'recettes.edit', params: { id: recette.id } }">Éditer la recette</router-link>
+    <router-link v-if="recette.id && authenticated" :to="{ name: 'recettes.edit', params: { id: recette.id } }">Éditer la recette</router-link>
   </div>
 </template>
 <script>
@@ -46,16 +46,27 @@ import axios from "axios";
 export default {
   data() {
     return {
-      recette: {
-      }
+      authenticated: auth.check(),
+      recette: {}
     };
   },
   created() {
-    console.log("created");
-    axios.get("/api/recettes/" + this.$route.params.id).then(response => {
-      this.recette = response.data.data;
-      console.log(this.recette);
-    });
+    // console.log("created");
+    // axios.get("/api/recettes/" + this.$route.params.id).then(response => {
+    //   this.recette = response.data.data;
+    //   console.log(this.recette);
+    // });
+    const id = this.$route.params.id;
+    // console.log(id);
+    this.api.endpoints.recettes
+        .getOne({ id })
+        .then(response => {
+          this.recette = response.data.data;
+          // console.log(this.recette);
+        })
+        .catch(error => {
+          console.log(error, error.response.data);
+        });
   }
 };
 </script>

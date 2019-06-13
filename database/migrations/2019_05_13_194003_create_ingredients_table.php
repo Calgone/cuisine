@@ -17,7 +17,7 @@ class CreateIngredientsTable extends Migration
             'ingredients',
             function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->unsignedBigInteger('recette_id');
+                $table->unsignedBigInteger('recipe_id');
                 $table->timestamps();
 
                 $table->foreign('ingredient_group_id')

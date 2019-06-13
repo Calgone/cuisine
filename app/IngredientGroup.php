@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class IngredientGroupe extends Model
+class IngredientGroup extends Model
 {
     public function recette()
     {
-        return $this->belongsTo(Recette::class);
+        return $this->belongsTo(Recipe::class);
     }
 
     public function ingredients()

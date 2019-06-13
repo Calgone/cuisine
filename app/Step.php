@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Etape extends Model
+class Step extends Model
 {
-    protected $fillable = ['recette_id', 'description', 'ordre', 'complete'];
+    protected $fillable = ['recipe_id', 'description', 'order', 'complete'];
     
-    public function recette()
+    public function recipe()
     {
         // si la relation renvoie null il faut préciser le champs :
-        // return $this->belongsTo('App\Recette', 'recette_id'); 
-        return $this->belongsTo(Recette::class);
+        // return $this->belongsTo('App\Recipe', 'recipe_id'); 
+        return $this->belongsTo(Recipe::class);
     }
 
     public function complete($complete = true)

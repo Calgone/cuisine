@@ -13,16 +13,22 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        Schema::create(
+            'users',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('first_name');
+                $table->string('last_name');
+                $table->string('email')->unique();
+                $table->timestamp('email_verified_at')->nullable();
+                $table->string('password');
+                $table->rememberToken();
+                $table->timestamp('created_at')->useCurrent();
+                $table->timestamp('updated_at')->default(
+                    DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+                );
+            }
+        );
     }
 
     /**
