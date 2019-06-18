@@ -25,7 +25,7 @@
         <li v-for="task in incompleteTasks" :key="task.description" v-text="task.description"></li>
       </ul>
       <ul>
-        <RecetteList></RecetteList>
+        <RecipeList></RecipeList>
       </ul>
     </div>
     <a class="button is-success" @click="testAjax">test Ajax</a>
@@ -48,14 +48,14 @@
 </template>
 
 <script>
-import RecetteList from "./RecetteList";
+import RecipeList from "./RecipeList";
 import MainTabs from "./MainTabs";
 import TabDetail from "./TabDetail";
 import axios from 'axios';
 
 export default {
   components: {
-    RecetteList,
+    RecipeList,
     MainTabs,
     TabDetail
   },

@@ -38,8 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function recettes()
+    public function recipes()
     {
-        return $this->hasMany(Recette::class, 'owner_id');
+        return $this->hasMany(Recipe::class, 'owner_id');
     }
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Unite extends Model
+class Unit extends Model
 {
-    //
+    public $timestamps = false;
 }

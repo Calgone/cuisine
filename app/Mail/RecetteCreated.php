@@ -6,22 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Recette;
+use App\Recipe;
 
-class RecetteCreated extends Mailable
+class RecipeCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $recette; // public pour qu'il soit visible depuis le template
+    public $recipe; // public pour qu'il soit visible depuis le template
     
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Recette $recette)
+    public function __construct(Recipe $recipe)
     {
-        $this->recette = $recette;
+        $this->recipe = $recipe;
     }
 
     /**
@@ -31,6 +31,6 @@ class RecetteCreated extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.recette-created');
+        return $this->markdown('mail.recipe-created');
     }
 }

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateEtapesTable extends Migration
+class CreateStepsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -30,7 +30,7 @@ class CreateEtapesTable extends Migration
         );
 
         Schema::table(
-            'etapes',
+            'steps',
             function (Blueprint $table) {
                 $table->foreign('recipe_id')
                     ->references('id')->on('recipes')

@@ -16,9 +16,9 @@ class Recipe extends Model
         parent::boot();
         // Fonction qui sera appelée à chaque création de recette
         // Désactivé car se déclenche au moment du seeding
-        // static::created(function($recette) {
-        //     Mail::to($recette->owner->email)->send(
-        //         new RecetteCreated($recette)
+        // static::created(function($recipe) {
+        //     Mail::to($recipe->owner->email)->send(
+        //         new RecipeCreated($recipe)
         //     );
         // });
     }

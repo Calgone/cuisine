@@ -1,10 +1,10 @@
 <?php
 
-use App\Unite;
+use App\Unit;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UnitesTableSeeder extends Seeder
+class UnitsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,220 +15,220 @@ class UnitesTableSeeder extends Seeder
     {
         DB::table('units')->truncate();
 
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 1,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'teaspoon',
-                'nom_court' => 'tsp'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'teaspoon',
+                'short_name' => 'tsp'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 2,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'tablespoon',
-                'nom_court' => 'tbsp'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'tablespoon',
+                'short_name' => 'tbsp'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 3,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'fluid ounce',
-                'nom_court' => 'fl oz'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'fluid ounce',
+                'short_name' => 'fl oz'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 4,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'gill',
-                'nom_court' => 'gill'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'gill',
+                'short_name' => 'gill'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 5,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'cup',
-                'nom_court' => 'c'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'cup',
+                'short_name' => 'c'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 6,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'pint',
-                'nom_court' => 'pt'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'pint',
+                'short_name' => 'pt'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 7,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'quart',
-                'nom_court' => 'qt'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'quart',
+                'short_name' => 'qt'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 8,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'gallon',
-                'nom_court' => 'gal'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'gallon',
+                'short_name' => 'gal'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 9,
-                'categorie' => 'volume',
-                'origine'   => 'eu',
-                'nom'       => 'millilitre',
-                'nom_court' => 'ml'
+                'category' => 'volume',
+                'origin'   => 'eu',
+                'name'       => 'millilitre',
+                'short_name' => 'ml'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 10,
-                'categorie' => 'volume',
-                'origine'   => 'us',
-                'nom'       => 'centilitre',
-                'nom_court' => 'cl'
+                'category' => 'volume',
+                'origin'   => 'us',
+                'name'       => 'centilitre',
+                'short_name' => 'cl'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 11,
-                'categorie' => 'volume',
-                'origine'   => 'eu',
-                'nom'       => 'décilitre',
-                'nom_court' => 'dl'
+                'category' => 'volume',
+                'origin'   => 'eu',
+                'name'       => 'décilitre',
+                'short_name' => 'dl'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 12,
-                'categorie' => 'volume',
-                'origine'   => 'eu',
-                'nom'       => 'litre',
-                'nom_court' => 'l'
+                'category' => 'volume',
+                'origin'   => 'eu',
+                'name'       => 'litre',
+                'short_name' => 'l'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 13,
-                'categorie' => 'poids',
-                'origine'   => 'us',
-                'nom'       => 'pound',
-                'nom_court' => 'lb'
+                'category' => 'poids',
+                'origin'   => 'us',
+                'name'       => 'pound',
+                'short_name' => 'lb'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 14,
-                'categorie' => 'poids',
-                'origine'   => 'us',
-                'nom'       => 'ounce',
-                'nom_court' => 'oz'
+                'category' => 'poids',
+                'origin'   => 'us',
+                'name'       => 'ounce',
+                'short_name' => 'oz'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 15,
-                'categorie' => 'poids',
-                'origine'   => 'eu',
-                'nom'       => 'milligramme',
-                'nom_court' => 'mg'
+                'category' => 'poids',
+                'origin'   => 'eu',
+                'name'       => 'milligramme',
+                'short_name' => 'mg'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 16,
-                'categorie' => 'poids',
-                'origine'   => 'eu',
-                'nom'       => 'gramme',
-                'nom_court' => 'g'
+                'category' => 'poids',
+                'origin'   => 'eu',
+                'name'       => 'gramme',
+                'short_name' => 'g'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 17,
-                'categorie' => 'poids',
-                'origine'   => 'eu',
-                'nom'       => 'kilogramme',
-                'nom_court' => 'kg'
+                'category' => 'poids',
+                'origin'   => 'eu',
+                'name'       => 'kilogramme',
+                'short_name' => 'kg'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 18,
-                'categorie' => 'longueur',
-                'origine'   => 'eu',
-                'nom'       => 'millimètre',
-                'nom_court' => 'mm'
+                'category' => 'longueur',
+                'origin'   => 'eu',
+                'name'       => 'millimètre',
+                'short_name' => 'mm'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 19,
-                'categorie' => 'longueur',
-                'origine'   => 'eu',
-                'nom'       => 'centimètre',
-                'nom_court' => 'cm'
+                'category' => 'longueur',
+                'origin'   => 'eu',
+                'name'       => 'centimètre',
+                'short_name' => 'cm'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 20,
-                'categorie' => 'longueur',
-                'origine'   => 'eu',
-                'nom'       => 'mètre',
-                'nom_court' => 'm'
+                'category' => 'longueur',
+                'origin'   => 'eu',
+                'name'       => 'mètre',
+                'short_name' => 'm'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 21,
-                'categorie' => 'longueur',
-                'origine'   => 'us',
-                'nom'       => 'inch',
-                'nom_court' => 'in'
+                'category' => 'longueur',
+                'origin'   => 'us',
+                'name'       => 'inch',
+                'short_name' => 'in'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 22,
-                'categorie' => 'température',
-                'origine'   => 'us',
-                'nom'       => 'Farenheit',
-                'nom_court' => '°F'
+                'category' => 'température',
+                'origin'   => 'us',
+                'name'       => 'Farenheit',
+                'short_name' => '°F'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 23,
-                'categorie' => 'température',
-                'origine'   => 'fr',
-                'nom'       => 'Celsius',
-                'nom_court' => '°C'
+                'category' => 'température',
+                'origin'   => 'fr',
+                'name'       => 'Celsius',
+                'short_name' => '°C'
             ]
         );
-        Unite::create(
+        Unit::create(
             [
                 'id'        => 24,
-                'categorie' => 'quantité',
-                'origine'   => '',
-                'nom'       => 'quantité unitaire',
-                'nom_court' => 'nb'
+                'category' => 'quantité',
+                'origin'   => '',
+                'name'       => 'quantité unitaire',
+                'short_name' => 'nb'
             ]
         );
     }

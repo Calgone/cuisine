@@ -23,7 +23,7 @@
         <div class="navbar-start">
           <router-link class="navbar-item" :to="{ name: 'home' }">Accueil</router-link>
           <!-- <a class="navbar-item">Accueil</a> -->
-          <router-link class="navbar-item" :to="{ name: 'recettes.index' }">Recettes</router-link>
+          <router-link class="navbar-item" :to="{ name: 'recipes.index' }">Recettes</router-link>
 
           <router-link class="navbar-item" :to="{ name: 'hello' }">Hello World</router-link>
 

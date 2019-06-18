@@ -27,10 +27,10 @@ class CreateAlimTable extends Migration
                 $table->timestamp('updated_at')->default(
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
-                $table->foreign('alim_grp_code')
-                    ->references('alim_grp_code')->on('alim_grp')
-                    ->onUpdate('cascade')
-                    ->onDelete('restrict');
+                // $table->foreign('alim_grp_code')
+                //     ->references('alim_grp_code')->on('alim_grp')
+                //     ->onUpdate('cascade')
+                //     ->onDelete('restrict');
             }
         );
     }

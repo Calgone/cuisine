@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Etape;
-use App\Recette;
+use App\Step;
+use App\Recipe;
 
-class RecetteEtapesController extends Controller
+class RecipeStepsController extends Controller
 {
-    public function store(Recette $recette)
+    public function store(Recipe $recipe)
     {
-        // dd($recette);
+        // dd($recipe);
         $attributes = request()->validate(['description' => ['required', 'min:3']]);
-        $recette->addEtape($attributes);
+        $recipe->addStep($attributes);
         // Etape::create([
-        //     'recette_id' => $recette->id,
+        //     'recipe_id' => $recipe->id,
         //     'description' => request('description'),
         //     'ordre' => 1        
         // ]);
@@ -22,11 +22,11 @@ class RecetteEtapesController extends Controller
         return back();
     }
 
-    public function update(Etape $etape)
+    public function update(Step $step)
     {
         // $etape->complete(request()->has('complete'));
         $method = request()->has('complete') ? 'complete' : 'incomplete';
-        $etape->$method();
+        $step->$method();
         // dd(request()->all());
         // $etape->update([
         //     'complete' => request()->has('complete')

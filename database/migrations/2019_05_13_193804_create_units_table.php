@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUnitesTable extends Migration
+class CreateUnitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateUnitesTable extends Migration
     public function up()
     {
         Schema::create(
-            'unites',
+            'units',
             function (Blueprint $table) {
                 $table->unsignedTinyInteger('id')->primary();
                 $table->string('category', 20)->index();
@@ -33,6 +33,6 @@ class CreateUnitesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unites');
+        Schema::dropIfExists('units');
     }
 }

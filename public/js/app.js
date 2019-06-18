@@ -3849,7 +3849,7 @@ var render = function() {
                   "router-link",
                   {
                     staticClass: "navbar-item",
-                    attrs: { to: { name: "recettes.index" } }
+                    attrs: { to: { name: "recipes.index" } }
                   },
                   [_vm._v("Recettes")]
                 ),

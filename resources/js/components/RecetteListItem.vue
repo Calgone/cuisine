@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-    name: 'RecetteListItem'
+    name: 'RecipeListItem'
 }
 </script>
 

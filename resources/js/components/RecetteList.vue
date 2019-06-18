@@ -1,15 +1,15 @@
 <template>
     <div>
-        <RecetteListItem v-for="task in tasks" :key="task.description">{{ task.description }}</RecetteListItem>
+        <RecipeListItem v-for="task in tasks" :key="task.description">{{ task.description }}</RecipeListItem>
     </div>
 </template>
 <script>
-import RecetteListItem from './RecetteListItem';
+import RecipeListItem from './RecipeListItem';
 
 export default {
-    name: 'RecetteList',
+    name: 'RecipeList',
     components: {
-            RecetteListItem
+            RecipeListItem
         },
     data() {
         return {

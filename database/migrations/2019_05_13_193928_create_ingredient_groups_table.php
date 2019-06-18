@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIngredientGroupesTable extends Migration
+class CreateIngredientGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,11 @@ class CreateIngredientGroupesTable extends Migration
         Schema::create('ingredient_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 200);
+            $table->unsignedBigInteger('recipe_id');
             $table->timestamps();
 
             $table->foreign('recipe_id')
-                ->references('id')->on('recipe')
+                ->references('id')->on('recipes')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });
