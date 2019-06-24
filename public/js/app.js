@@ -1961,23 +1961,23 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       authenticated: auth.check(),
-      recette: {}
+      recipe: {}
     };
   },
   created: function created() {
     var _this = this;
 
     // console.log("created");
-    // axios.get("/api/recettes/" + this.$route.params.id).then(response => {
-    //   this.recette = response.data.data;
-    //   console.log(this.recette);
+    // axios.get("/api/recipes/" + this.$route.params.id).then(response => {
+    //   this.recipe = response.data.data;
+    //   console.log(this.recipe);
     // });
     var id = this.$route.params.id; // console.log(id);
 
-    this.api.endpoints.recettes.getOne({
+    this.api.endpoints.recipes.getOne({
       id: id
     }).then(function (response) {
-      _this.recette = response.data.data; // console.log(this.recette);
+      _this.recipe = response.data.data; // console.log(this.recipe);
     })["catch"](function (error) {
       console.log(error, error.response.data);
     });
@@ -2059,7 +2059,7 @@ __webpack_require__.r(__webpack_exports__);
       message: null,
       loaded: false,
       saving: false,
-      recette: {
+      recipe: {
         id: null,
         nom: "",
         description: "",
@@ -2074,12 +2074,12 @@ __webpack_require__.r(__webpack_exports__);
 
       // Form submit event
       this.saving = true;
-      this.api.endpoints.recettes.update(this.recette).then(function (response) {
-        _this.message = "Recette mise à jour";
+      this.api.endpoints.recipes.update(this.recipe).then(function (response) {
+        _this.message = "Recipe updated";
         setTimeout(function () {
           return _this.message = null;
         }, 2000);
-        _this.recette = response.data.data;
+        _this.recipe = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       }).then(function (_) {
@@ -2092,13 +2092,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.saving = true;
-      console.log(this.recette.id);
-      this.api.endpoints.recettes["delete"](this.recette).then(function (response) {
+      console.log(this.recipe.id);
+      this.api.endpoints.recipes["delete"](this.recipe).then(function (response) {
         // console.log(response);
-        _this2.message = "Recette supprimée.";
+        _this2.message = "Recipe deleted.";
         setTimeout(function () {
           return _this2.$router.push({
-            name: "recettes.index"
+            name: "recipes.index"
           });
         }, 2000);
       });
@@ -2110,14 +2110,14 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this3 = this;
 
-    // Load recette details
+    // Load recipe details
     console.log(this.$route.params.id);
     var id = this.$route.params.id;
-    this.api.endpoints.recettes.getOne({
+    this.api.endpoints.recipes.getOne({
       id: id
     }).then(function (response) {
       _this3.loaded = true;
-      _this3.recette = response.data.data;
+      _this3.recipe = response.data.data;
       console.log(response.data.data);
     })["catch"](function (err) {
       _this3.$router.push({
@@ -2183,7 +2183,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       authenticated: auth.check(),
       loading: false,
-      recettes: null,
+      recipes: null,
       meta: null,
       links: {
         first: null,
@@ -2240,7 +2240,7 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         page: page
       };
-      this.api.endpoints.recettes.getAll({
+      this.api.endpoints.recipes.getAll({
         params: params
       }).then(function (response) {
         _this.setData(null, response.data);
@@ -2249,14 +2249,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     setData: function setData(err, _ref) {
-      var recettes = _ref.data,
+      var recipes = _ref.data,
           links = _ref.links,
           meta = _ref.meta;
 
       if (err) {
         this.error = err.toString();
       } else {
-        this.recettes = recettes;
+        this.recipes = recipes;
         this.links = links;
         this.meta = meta;
       }
@@ -3814,11 +3814,7 @@ var render = function() {
               { staticClass: "navbar-item", attrs: { to: { name: "home" } } },
               [
                 _c("img", {
-                  attrs: {
-                    src: "https://bulma.io/images/bulma-logo.png",
-                    width: "112",
-                    height: "28"
-                  }
+                  attrs: { src: "/img/greg_kitchen.png", width: "84" }
                 })
               ]
             ),
@@ -3842,7 +3838,7 @@ var render = function() {
                     staticClass: "navbar-item",
                     attrs: { to: { name: "home" } }
                   },
-                  [_vm._v("Accueil")]
+                  [_vm._v("Home")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -3851,7 +3847,7 @@ var render = function() {
                     staticClass: "navbar-item",
                     attrs: { to: { name: "recipes.index" } }
                   },
-                  [_vm._v("Recettes")]
+                  [_vm._v("Recipes")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -3917,7 +3913,9 @@ var render = function() {
               _c("div", { staticClass: "navbar-item" }, [
                 _vm.authenticated && _vm.user
                   ? _c("div", [
-                      _c("p", [_vm._v("Bienvenue " + _vm._s(_vm.user.prenom))]),
+                      _c("p", [
+                        _vm._v("Welcome, " + _vm._s(_vm.user.first_name))
+                      ]),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -3925,7 +3923,7 @@ var render = function() {
                           staticClass: "button is-danger is-inverted",
                           on: { click: _vm.logout }
                         },
-                        [_vm._v("déconnexion")]
+                        [_vm._v("Log out")]
                       )
                     ])
                   : _c(
@@ -3940,7 +3938,7 @@ var render = function() {
                             staticClass: "button is-light",
                             attrs: { to: { name: "login" } }
                           },
-                          [_vm._v("Connexion")]
+                          [_vm._v("Sign in")]
                         )
                       ],
                       1
@@ -3987,7 +3985,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("a", { staticClass: "button is-primary" }, [
-      _c("strong", [_vm._v("Inscription")])
+      _c("strong", [_vm._v("Register")])
     ])
   }
 ]
@@ -4297,7 +4295,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", { staticClass: "title" }, [_vm._v(_vm._s(_vm.recette.nom))]),
+      _c("h1", { staticClass: "title" }, [_vm._v(_vm._s(_vm.recipe.nom))]),
       _vm._v(" "),
       _c("nav", { staticClass: "level" }, [
         _c("div", { staticClass: "level-item has-text-centered" }, [
@@ -4307,7 +4305,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "title" }, [
-              _vm._v(_vm._s(_vm.recette.nb_personnes))
+              _vm._v(_vm._s(_vm.recipe.nb_people))
             ])
           ])
         ]),
@@ -4319,7 +4317,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "title" }, [
-              _vm._v(_vm._s(_vm.recette.prepa_minutes))
+              _vm._v(_vm._s(_vm.recipe.prep_minutes))
             ])
           ])
         ]),
@@ -4329,7 +4327,7 @@ var render = function() {
             _c("p", { staticClass: "heading" }, [_vm._v("Temps de cuisson")]),
             _vm._v(" "),
             _c("p", { staticClass: "title" }, [
-              _vm._v(_vm._s(_vm.recette.cuisson_minutes))
+              _vm._v(_vm._s(_vm.recipe.cook_minutes))
             ])
           ])
         ]),
@@ -4339,24 +4337,22 @@ var render = function() {
             _c("p", { staticClass: "heading" }, [_vm._v("Difficulté")]),
             _vm._v(" "),
             _c("p", { staticClass: "title" }, [
-              _vm._v(_vm._s(_vm.recette.difficulte))
+              _vm._v(_vm._s(_vm.recipe.difficulty))
             ])
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("div", [
-        _vm._v("\n      " + _vm._s(_vm.recette.description) + "\n  ")
-      ]),
+      _c("div", [_vm._v("\n      " + _vm._s(_vm.recipe.description) + "\n  ")]),
       _vm._v(" "),
       _c("div", { staticClass: "content" }, [
         _c(
           "ol",
           { attrs: { type: "1" } },
-          _vm._l(_vm.recette.etapes, function(etape) {
-            return _c("li", { key: etape.id }, [
+          _vm._l(_vm.recipe.steps, function(step) {
+            return _c("li", { key: step.id }, [
               _vm._v(
-                "\n              " + _vm._s(etape.description) + "\n          "
+                "\n              " + _vm._s(step.description) + "\n          "
               )
             ])
           }),
@@ -4364,15 +4360,15 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm.recette.id && _vm.authenticated
+      _vm.recipe.id && _vm.authenticated
         ? _c(
             "router-link",
             {
               attrs: {
-                to: { name: "recettes.edit", params: { id: _vm.recette.id } }
+                to: { name: "recipes.edit", params: { id: _vm.recipe.id } }
               }
             },
-            [_vm._v("Éditer la recette")]
+            [_vm._v("Éditer la recipe")]
           )
         : _vm._e()
     ],
@@ -4430,8 +4426,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.recette.nom,
-                      expression: "recette.nom"
+                      value: _vm.recipe.nom,
+                      expression: "recipe.nom"
                     }
                   ],
                   staticClass: "input",
@@ -4441,13 +4437,13 @@ var render = function() {
                     placeholder: "nom",
                     required: ""
                   },
-                  domProps: { value: _vm.recette.nom },
+                  domProps: { value: _vm.recipe.nom },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.recette, "nom", $event.target.value)
+                      _vm.$set(_vm.recipe, "nom", $event.target.value)
                     }
                   }
                 })
@@ -4467,8 +4463,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.recette.description,
-                      expression: "recette.description"
+                      value: _vm.recipe.description,
+                      expression: "recipe.description"
                     }
                   ],
                   staticClass: "textarea",
@@ -4479,13 +4475,13 @@ var render = function() {
                     rows: "10",
                     required: ""
                   },
-                  domProps: { value: _vm.recette.description },
+                  domProps: { value: _vm.recipe.description },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.recette, "description", $event.target.value)
+                      _vm.$set(_vm.recipe, "description", $event.target.value)
                     }
                   }
                 })
@@ -4577,9 +4573,9 @@ var render = function() {
           "router-link",
           {
             staticClass: "button is-outlined is-link",
-            attrs: { to: { name: "recettes.create" } }
+            attrs: { to: { name: "recipe.create" } }
           },
-          [_vm._v("Créer une recette")]
+          [_vm._v("Create a recipe")]
         )
       ],
       1
@@ -4613,10 +4609,10 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm.recettes
+      _vm.recipes
         ? _c(
             "ul",
-            _vm._l(_vm.recettes, function(ref) {
+            _vm._l(_vm.recipes, function(ref) {
               var id = ref.id
               var nom = ref.nom
               var description = ref.description
@@ -4624,16 +4620,14 @@ var render = function() {
                 "li",
                 { key: id },
                 [
-                  _c("strong", [_vm._v("Nom:")]),
+                  _c("strong", [_vm._v("Name:")]),
                   _vm._v("\n        " + _vm._s(nom) + ",\n        "),
                   _c("strong", [_vm._v("Description:")]),
                   _vm._v("\n        " + _vm._s(description) + "\n        "),
                   _c(
                     "router-link",
                     {
-                      attrs: {
-                        to: { name: "recette.view", params: { id: id } }
-                      }
+                      attrs: { to: { name: "recipe.view", params: { id: id } } }
                     },
                     [_vm._v("Voir")]
                   ),
@@ -4643,10 +4637,10 @@ var render = function() {
                         "router-link",
                         {
                           attrs: {
-                            to: { name: "recettes.edit", params: { id: id } }
+                            to: { name: "recipes.edit", params: { id: id } }
                           }
                         },
-                        [_vm._v("Éditer")]
+                        [_vm._v("Edit")]
                       )
                     : _vm._e()
                 ],

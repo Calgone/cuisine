@@ -3,8 +3,8 @@
     <div class="content">
       <router-link
         class="button is-outlined is-link"
-        :to="{ name: 'recettes.create' }"
-      >Créer une recette</router-link>
+        :to="{ name: 'recipe.create' }"
+      >Create a recipe</router-link>
     </div>
     <div class="content box">
       <div class="loading" v-if="loading">Loading...</div>
@@ -16,14 +16,14 @@
         </p>
       </div>
 
-      <ul v-if="recettes">
-        <li v-for="{ id, nom, description } in recettes" :key="id">
-          <strong>Nom:</strong>
+      <ul v-if="recipes">
+        <li v-for="{ id, nom, description } in recipes" :key="id">
+          <strong>Name:</strong>
           {{ nom }},
           <strong>Description:</strong>
           {{ description }}
-          <router-link :to="{ name: 'recette.view', params: { id } }">Voir</router-link>
-          <router-link v-if="authenticated" :to="{ name: 'recettes.edit', params: { id } }">Éditer</router-link>
+          <router-link :to="{ name: 'recipe.view', params: { id } }">Voir</router-link>
+          <router-link v-if="authenticated" :to="{ name: 'recipes.edit', params: { id } }">Edit</router-link>
         </li>
       </ul>
       <nav class="pagination" role="pagination" aria-label="pagination">
@@ -45,7 +45,7 @@ export default {
     return {
       authenticated: auth.check(),
       loading: false,
-      recettes: null,
+      recipes: null,
       meta: null,
       links: {
         first: null,
@@ -97,7 +97,7 @@ export default {
       this.error = this.users = null;
       this.loading = true;
       const params = { page };
-      this.api.endpoints.recettes
+      this.api.endpoints.recipes
         .getAll({ params })
         .then(response => {
           this.setData(null, response.data);
@@ -106,11 +106,11 @@ export default {
           this.setData(error, error.response.data);
         });
     },
-    setData(err, { data: recettes, links, meta }) {
+    setData(err, { data: recipes, links, meta }) {
       if (err) {
         this.error = err.toString();
       } else {
-        this.recettes = recettes;
+        this.recipes = recipes;
         this.links = links;
         this.meta = meta;
       }

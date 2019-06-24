@@ -11,7 +11,7 @@
             class="input"
             name="nom"
             placeholder="nom"
-            v-model="recette.nom"
+            v-model="recipe.nom"
             required
           >
         </div>
@@ -24,7 +24,7 @@
             name="description"
             class="textarea"
             id="description"
-            v-model="recette.description"
+            v-model="recipe.description"
             cols="30"
             rows="10"
             required
@@ -64,7 +64,7 @@ export default {
       message: null,
       loaded: false,
       saving: false,
-      recette: {
+      recipe: {
         id: null,
         nom: "",
         description: "",
@@ -78,12 +78,12 @@ export default {
       // Form submit event
       this.saving = true;
 
-      this.api.endpoints.recettes
-        .update(this.recette)
+      this.api.endpoints.recipes
+        .update(this.recipe)
         .then(response => {
-          this.message = "Recette mise à jour";
+          this.message = "Recipe updated";
           setTimeout(() => (this.message = null), 2000);
-          this.recette = response.data.data;
+          this.recipe = response.data.data;
         })
         .catch(error => {
           console.log(error);
@@ -95,11 +95,11 @@ export default {
     },
     onDelete() {
       this.saving = true;
-      console.log(this.recette.id);
-      this.api.endpoints.recettes.delete(this.recette).then(response => {
+      console.log(this.recipe.id);
+      this.api.endpoints.recipes.delete(this.recipe).then(response => {
         // console.log(response);
-        this.message = "Recette supprimée.";
-        setTimeout(() => this.$router.push({ name: "recettes.index" }), 2000);
+        this.message = "Recipe deleted.";
+        setTimeout(() => this.$router.push({ name: "recipes.index" }), 2000);
       });
     },
     retour() {
@@ -107,14 +107,14 @@ export default {
     }
   },
   created() {
-    // Load recette details
+    // Load recipe details
     console.log(this.$route.params.id);
     const id = this.$route.params.id;
-    this.api.endpoints.recettes
+    this.api.endpoints.recipes
       .getOne({ id })
       .then(response => {
         this.loaded = true;
-        this.recette = response.data.data;
+        this.recipe = response.data.data;
         console.log(response.data.data);
       })
       .catch(err => {

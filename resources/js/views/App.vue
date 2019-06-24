@@ -3,7 +3,7 @@
     <nav class="navbar is-fixed-top is-light" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link class="navbar-item" :to="{ name: 'home' }">
-          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+          <img src="/img/greg_kitchen.png" width="84">
         </router-link>
 
         <a
@@ -21,9 +21,9 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <router-link class="navbar-item" :to="{ name: 'home' }">Accueil</router-link>
+          <router-link class="navbar-item" :to="{ name: 'home' }">Home</router-link>
           <!-- <a class="navbar-item">Accueil</a> -->
-          <router-link class="navbar-item" :to="{ name: 'recipes.index' }">Recettes</router-link>
+          <router-link class="navbar-item" :to="{ name: 'recipes.index' }">Recipes</router-link>
 
           <router-link class="navbar-item" :to="{ name: 'hello' }">Hello World</router-link>
 
@@ -45,15 +45,15 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div v-if="authenticated && user">
-              <p>Bienvenue {{ user.prenom }}</p>
+              <p>Welcome, {{ user.first_name }}</p>
 
-              <button @click="logout" class="button is-danger is-inverted">déconnexion</button>
+              <button @click="logout" class="button is-danger is-inverted">Log out</button>
             </div>
             <div class="buttons" v-else>
               <a class="button is-primary">
-                <strong>Inscription</strong>
+                <strong>Register</strong>
               </a>
-              <router-link :to="{ name: 'login' }" class="button is-light">Connexion</router-link>
+              <router-link :to="{ name: 'login' }" class="button is-light">Sign in</router-link>
             </div>
           </div>
         </div>
